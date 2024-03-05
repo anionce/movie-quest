@@ -11,6 +11,10 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.11.4",
+		"@emotion/styled": "^11.11.0",
+		"@mui/icons-material": "^5.15.11",
+		"@mui/material": "^5.15.11",
 		"@reduxjs/toolkit": "^1.9.5",
 		"@types/react-redux": "^7.1.25",
 		"i18next": "^23.10.0",

@@ -9,5 +9,5 @@ export const Home = () => {
 	// const { filteredItems, emptyFilter, onTypeChanged } = useFilter(data);
 	//let { currentItems, paginate, currentPage, pagesPerPage } = usePagination("");
 
-	return <>{t('placeholder.home.title')}</>;
+	return <span>{t('placeholder.home.title')}</span>;
 };
