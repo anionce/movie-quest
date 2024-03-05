@@ -1,10 +1,10 @@
 import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { exampleReducer } from '../services/slices/exampleSlice';
-import { exampleApi } from '../services/api/exampleApi';
+import { movieQuestApi } from '../services/api/movieQuestApi';
 
 const rootReducer = combineReducers({
-	[exampleApi.reducerPath]: exampleApi.reducer,
+	[movieQuestApi.reducerPath]: movieQuestApi.reducer,
 	example: exampleReducer,
 });
 
@@ -12,7 +12,7 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) =>
 	configureStore({
 		reducer: rootReducer,
 		devTools: process.env.NODE_ENV !== 'production',
-		middleware: getDefaultMiddleware => getDefaultMiddleware({}).concat([exampleApi.middleware]),
+		middleware: getDefaultMiddleware => getDefaultMiddleware({}).concat([movieQuestApi.middleware]),
 		preloadedState,
 	});
 

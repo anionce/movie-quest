@@ -5,6 +5,8 @@ import './services/i18n';
 import './index.scss';
 import { childrenRoutes } from './routes/routes';
 import { Layout } from './components/Layout/Layout';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 const router = createBrowserRouter([
 	{
@@ -16,6 +18,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
-		<RouterProvider router={router} />
+		<Provider store={store}>
+			<RouterProvider router={router} />
+		</Provider>
 	</React.StrictMode>
 );
