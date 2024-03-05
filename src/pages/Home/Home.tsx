@@ -6,8 +6,11 @@ import {
 } from '../../services/api/movieQuestApi';
 import './Home.scss';
 import { useTranslation } from 'react-i18next';
-import { getRandomValue } from '../../helpers/HomeHelper';
+import { getRandomValue, getTruncatedGenre } from '../../helpers/HomeHelper';
 import { Movie } from '../../models/MovieResponse';
+import { ClueButton } from '../../components/ClueButton/ClueButton';
+import { MovieClues } from '../../models/MovieClues';
+import { mapValueToGenre } from '../../constants/Genre';
 
 export const Home = () => {
 	const { t } = useTranslation();
@@ -18,6 +21,7 @@ export const Home = () => {
 
 	const [totalPages, setTotalPages] = useState<number | undefined>(undefined);
 	const [movie, setMovie] = useState<Movie | undefined>(undefined);
+	const [movieClues, setMovieClues] = useState<MovieClues | undefined>(undefined);
 
 	useEffect(() => {
 		if (data) {
@@ -42,6 +46,11 @@ export const Home = () => {
 	useEffect(() => {
 		if (movie) {
 			triggerDetails({ id: movie.id });
+			setMovieClues({
+				year: movie.release_date.substring(0, 4),
+				genres: movie.genre_ids.map((genre: number) => mapValueToGenre(genre)),
+				hangman: movie.title.length,
+			});
 		}
 	}, [movie]);
 
@@ -49,5 +58,14 @@ export const Home = () => {
 	// const { filteredItems, emptyFilter, onTypeChanged } = useFilter(data);
 	//let { currentItems, paginate, currentPage, pagesPerPage } = usePagination("");
 
-	return <button>{t('placeholder.home.title')}</button>;
+	const truncatedGenre = getTruncatedGenre(movieClues?.genres.join(' · '));
+
+	console.log(truncatedGenre, movieClues?.genres);
+
+	return (
+		<div className='home-container'>
+			{movieClues?.year && <ClueButton value={movieClues.year} type='year' />}
+			{truncatedGenre && <ClueButton value={truncatedGenre} type='genre' />}
+		</div>
+	);
 };

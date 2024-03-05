@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_KEY, BASE_URL, DISCOVER, LANGUAGE, MINIMUM_VOTE, POPULARITY_VALUE, TAG, TOKEN } from '../endpoints';
 import { APIMovieResponse, MovieDetail } from '../../models/MovieResponse';
-import { DetailMovieArgs, GetMovieArgs } from '../../models/movieQuestAPIArgs';
+import { DetailMovieArgs, GetMovieArgs } from '../../models/MovieQuestAPIArgs';
 
 export const movieQuestApi = createApi({
 	reducerPath: 'apiName',

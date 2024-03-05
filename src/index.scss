@@ -1,3 +1,5 @@
+@import '/src/assets/styles/variables.scss';
+
 :root {
 	font-family: 'Inter', 'Oxygen', 'Roboto', 'Segoe UI', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
 		'Helvetica Neue', sans-serif;
@@ -25,10 +27,25 @@ a:hover {
 
 body {
 	background-color: $color-orange;
-	border-radius: 8px;
+	font-family: $main-font;
 	display: flex;
 	place-items: center;
 	margin: 4px;
 	width: calc(100vw - 8px);
 	height: calc(100vh - 8px);
+}
+
+button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: $font-size-md;
+	font-family: $main-font;
+	font-weight: bold;
+	height: 28px;
+	padding: 14px;
+	border: 2.5px solid $color-black;
+	border-radius: 6px;
+	box-shadow: 5px 7px 0px -3px $color-black;
+	cursor: pointer;
 }

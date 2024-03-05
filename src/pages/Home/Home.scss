@@ -1,5 +1,14 @@
 @import '../../assets/styles/variables';
 
+.home-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 16px 0;
+	gap: 24px;
+}
+
 @media only screen and (max-width: $lg) {
 }
 
