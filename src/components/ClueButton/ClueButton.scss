@@ -1,9 +1,32 @@
 @import '../../assets/styles/variables.scss';
 
-.button-container-year {
+.button-year {
 	background-color: $color-purple;
 }
 
-.button-container-genre {
+.button-genre {
+	background-color: $color-yellow;
+}
+
+.button-tag-1 {
+	background-color: $color-green;
+}
+
+.button-tag-2 {
+	background-color: $color-white;
+}
+
+.button-tag-3 {
+	background-color: $color-purple;
+}
+
+.button-tagline {
+	background-color: $color-blue;
+	font-size: $font-size-xs;
+	height: fit-content;
+	padding: 4px 8px;
+}
+
+.button-actor {
 	background-color: $color-yellow;
 }

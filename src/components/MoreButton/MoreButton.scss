@@ -1,0 +1,13 @@
+@import '../../assets/styles/variables.scss';
+
+.more-button {
+	font-size: $font-size-xs;
+	width: 140px;
+	margin: 24px 0 8px 0;
+}
+
+.lost-button {
+	font-size: $font-size-xs;
+	background-color: $color-red;
+	margin: 24px 0 8px 0;
+}

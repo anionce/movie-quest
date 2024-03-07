@@ -2,6 +2,41 @@
 
 .input-container {
 	display: flex;
-	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+	gap: 16px;
+
+	& .MuiAutocomplete-root {
+		width: 250px;
+	}
+
+	& .MuiInputBase-root {
+		display: flex;
+		align-items: center;
+		font-size: $font-size-xs;
+		font-family: $main-font;
+		font-weight: bold;
+		border: 2.5px solid $color-black;
+		border-radius: 6px;
+		padding-right: 6px !important;
+		box-shadow: 6px 7px 0px -3px $color-black;
+		background-color: $color-white;
+
+		& .MuiInputBase-input {
+			padding: 2.5px 8px;
+		}
+
+		fieldset {
+			border: none !important;
+			outline: none !important;
+		}
+
+		& :focus {
+			outline: none;
+		}
+
+		& .MuiSvgIcon-root {
+			display: none;
+		}
+	}
 }

@@ -4,9 +4,25 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	margin: 16px 0;
-	gap: 24px;
+	height: 100%;
+}
+
+.game-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	gap: 28px;
+}
+
+.clues-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
 }
 
 @media only screen and (max-width: $lg) {

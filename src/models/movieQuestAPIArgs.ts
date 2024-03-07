@@ -5,6 +5,6 @@ export type GetMovieArgs = {
 	streamingServices?: string | null;
 };
 
-export type DetailMovieArgs = {
+export type MovieIdArgs = {
 	id: number;
 };

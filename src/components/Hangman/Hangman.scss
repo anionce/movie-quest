@@ -1,0 +1,15 @@
+@import '../../assets/styles/variables.scss';
+
+.hangman-figure {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	word-break: normal;
+	white-space: pre-wrap;
+	line-height: 1;
+}
+
+.hangman-figure__char {
+	font-weight: bolder;
+	font-size: $font-size-md;
+}

@@ -53,6 +53,29 @@ export type MovieDetail = Movie & {
 	tagline: string;
 };
 
+export type Keywords = {
+	id: number;
+	keywords: { id: number; name: string }[];
+};
+
+export type Credits = {
+	id: number;
+	cast: {
+		adult: boolean;
+		gender: number;
+		id: number;
+		known_for_department: string;
+		name: string;
+		original_name: string;
+		popularity: number;
+		profile_path: string;
+		cast_id: number;
+		character: string;
+		credit_id: string;
+		order: number;
+	}[];
+};
+
 export type AvailabilityInfo = {
 	display_priority: number;
 	logo_path: string;
