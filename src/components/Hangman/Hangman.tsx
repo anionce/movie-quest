@@ -14,8 +14,6 @@ export const Hangman = ({ value }: HangmanProps) => {
 
 	const words = value.split(/\s+/);
 
-	console.log(words, 'title by spaces');
-
 	return (
 		<div className='hangman-figure'>
 			{words.map((word, index) => (

@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
-	useGetRandomMoviesQuery,
 	useLazyGetCreditsQuery,
 	useLazyGetDetailsQuery,
 	useLazyGetKeywordsQuery,
 	useLazyGetRandomMoviesQuery,
 } from '../../services/api/movieQuestApi';
 import './Home.scss';
-import { useTranslation } from 'react-i18next';
 import { getRandomValue, getTruncatedGenre } from '../../helpers/HomeHelper';
 import { Movie } from '../../models/MovieResponse';
 import { ClueButton } from '../../components/ClueButton/ClueButton';
@@ -17,11 +15,17 @@ import { Input } from '../../components/Input/Input';
 import { MoreButton } from '../../components/MoreButton/MoreButton';
 import { Hangman } from '../../components/Hangman/Hangman';
 import { useNavigate } from 'react-router-dom';
+import { GameFooter } from '../../components/GameFooter/GameFooter';
+import { decreaseScore, resetScore, setMovie } from '../../services/slices/scoreboardSlice';
+import { useAppDispatch } from '../../store';
+import { Loader } from '../../components/Loader/Loader';
 
 export const Home = () => {
-	const { data } = useGetRandomMoviesQuery({ page: 1 });
+	//const { data } = useGetRandomMoviesQuery({ page: 1 });
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 
+	const [triggerPages, { data }] = useLazyGetRandomMoviesQuery();
 	const [triggerGetMovies, { data: movieData, isLoading: isLoadingMovieData }] = useLazyGetRandomMoviesQuery();
 	const [triggerGetMoreMovies] = useLazyGetRandomMoviesQuery();
 
@@ -30,7 +34,7 @@ export const Home = () => {
 	const [triggerCasting, { data: movieCast }] = useLazyGetCreditsQuery();
 
 	const [totalPages, setTotalPages] = useState<number | undefined>(undefined);
-	const [movie, setMovie] = useState<Movie | undefined>(undefined);
+	const [movieToGuess, setMovieToGuess] = useState<Movie | undefined>(undefined);
 	const [movieClues, setMovieClues] = useState<MovieClues | undefined>(undefined);
 	const [searchableResults, setSearchableResults] = useState<string[]>([]);
 	const [clueCounter, setClueCounter] = useState<number>(0);
@@ -41,18 +45,21 @@ export const Home = () => {
 		actor: false,
 	});
 
-	/* const refreshPage = () => {
+	const refreshPage = () => {
 		setTotalPages(undefined);
-		setMovie(undefined);
+		setMovieToGuess(undefined);
 		setMovieClues(undefined);
 		setSearchableResults([]);
 		setClueCounter(0);
 		setToggleClues({ keywords: false, tagline: false, actor: false });
+		dispatch(resetScore());
 		navigate('/');
-	}; */
+		triggerPages({ page: getRandomValue(10) });
+	};
 
 	const getMoreClues = () => {
 		setClueCounter(prev => prev + 1);
+		dispatch(decreaseScore(clueCounter));
 	};
 
 	useEffect(() => {
@@ -84,7 +91,7 @@ export const Home = () => {
 	};
 
 	const guessMovie = (movieTitle: string) => {
-		if (movie?.title.toLowerCase() === movieTitle.toLowerCase()) {
+		if (movieToGuess?.title.toLowerCase() === movieTitle.toLowerCase()) {
 			navigate('/win');
 		} else {
 			// lógica para perder puntos
@@ -92,6 +99,12 @@ export const Home = () => {
 	};
 
 	useEffect(() => {
+		dispatch(resetScore());
+		triggerPages({ page: 11 });
+	}, []);
+
+	useEffect(() => {
+		console.log(data, 'data use effect');
 		if (data) {
 			setTotalPages(data.total_pages);
 		}
@@ -106,7 +119,9 @@ export const Home = () => {
 	useEffect(() => {
 		if (movieData) {
 			const randomElement = getRandomValue(20);
-			setMovie(movieData.results[randomElement]);
+			const movieToGuess = movieData.results[randomElement];
+			setMovieToGuess(movieToGuess);
+			dispatch(setMovie(movieToGuess.title));
 
 			const titleArray = movieData.results.map((movie: Movie) => movie.title);
 			setSearchableResults(titleArray);
@@ -116,16 +131,16 @@ export const Home = () => {
 	}, [movieData]);
 
 	useEffect(() => {
-		if (movie) {
-			triggerDetails({ id: movie.id });
-			triggerKeywords({ id: movie.id });
-			triggerCasting({ id: movie.id });
+		if (movieToGuess) {
+			triggerDetails({ id: movieToGuess.id });
+			triggerKeywords({ id: movieToGuess.id });
+			triggerCasting({ id: movieToGuess.id });
 			setMovieClues({
-				year: movie.release_date.substring(0, 4),
-				genres: movie.genre_ids.map((genre: number) => mapValueToGenre(genre)),
+				year: movieToGuess.release_date.substring(0, 4),
+				genres: movieToGuess.genre_ids.map((genre: number) => mapValueToGenre(genre)),
 			});
 		}
-	}, [movie]);
+	}, [movieToGuess]);
 
 	useEffect(() => {
 		if (movieDetails) {
@@ -161,7 +176,7 @@ export const Home = () => {
 
 	const truncatedGenre = getTruncatedGenre(movieClues?.genres?.join(' · '));
 
-	const shouldShowFirstClues = movie && truncatedGenre && movieClues?.year && movie.title;
+	const shouldShowFirstClues = movieToGuess && truncatedGenre && movieClues?.year && movieToGuess.title;
 	const shouldShowKeywords = movieClues?.tags && toggleClues.keywords;
 	const shouldShowTagline = movieClues?.tagline && toggleClues.tagline;
 	const shouldShowActor = movieClues?.actor && toggleClues.actor;
@@ -170,7 +185,7 @@ export const Home = () => {
 
 	return (
 		<div className='home-container'>
-			{isLoadingMovieData && <div>Loading</div>}
+			{isLoadingMovieData && <Loader />}
 			{!isLoadingMovieData && (
 				<div className='game-container'>
 					{shouldShowInput && <Input searchableResults={searchableResults} guessMovie={guessMovie} />}
@@ -178,7 +193,7 @@ export const Home = () => {
 						<div className='clues-container'>
 							<ClueButton value={movieClues.year} type='year' />
 							<ClueButton value={truncatedGenre} type='genre' />
-							<Hangman value={movie.title} />
+							<Hangman value={movieToGuess.title} />
 						</div>
 					)}
 					{shouldShowKeywords && (
@@ -193,6 +208,7 @@ export const Home = () => {
 				</div>
 			)}
 			<MoreButton getMoreClues={getMoreClues} gameFinished={toggleClues.actor} />
+			<GameFooter refreshPage={refreshPage} />
 		</div>
 	);
 };

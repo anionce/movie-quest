@@ -1,5 +1,6 @@
+import { Result } from '../../components/Result/Result';
 import './Lose.scss';
 
 export const Lose = () => {
-	return <>This is the lose page</>;
+	return <Result result='lose' />;
 };

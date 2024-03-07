@@ -1,0 +1,24 @@
+@import '../../assets/styles/variables';
+
+.result-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 24px;
+	height: 100%;
+}
+
+span {
+	font-family: $main-font;
+	font-size: $font-size-md;
+	font-weight: bold;
+}
+
+.correct {
+	color: $color-green;
+}
+
+.incorrect {
+	color: $color-red;
+}

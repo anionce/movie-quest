@@ -1,11 +1,11 @@
 import { combineReducers, configureStore, PreloadedState } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { exampleReducer } from '../services/slices/exampleSlice';
+import { scoreboarReducer } from '../services/slices/scoreboardSlice';
 import { movieQuestApi } from '../services/api/movieQuestApi';
 
 const rootReducer = combineReducers({
 	[movieQuestApi.reducerPath]: movieQuestApi.reducer,
-	example: exampleReducer,
+	scoreBoard: scoreboarReducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) =>

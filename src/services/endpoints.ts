@@ -8,8 +8,8 @@ export const TOKEN = import.meta.env.VITE_REACT_APP_TOKEN;
 
 export const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY;
 
-export const POPULARITY_VALUE = 600;
+export const POPULARITY_VALUE = 650;
 
-export const MINIMUM_VOTE = 5;
+export const MINIMUM_VOTE = 5.5;
 
 export const LANGUAGE = 'en-US';

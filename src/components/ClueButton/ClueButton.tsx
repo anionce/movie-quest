@@ -6,7 +6,7 @@ export type ClueButtonProps = {
 };
 
 export const ClueButton = ({ value, type }: ClueButtonProps) => {
-	const getClassName = (value: string) => `button-${value}`;
+	const getClassName = () => `button-${type}`;
 
-	return <button className={getClassName(type)}>{value}</button>;
+	return <button className={getClassName()}>{value}</button>;
 };

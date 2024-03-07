@@ -1,5 +1,6 @@
+import { Result } from '../../components/Result/Result';
 import './Win.scss';
 
 export const Win = () => {
-	return <>This is the win page</>;
+	return <Result result='win' />;
 };

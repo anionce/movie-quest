@@ -4,7 +4,7 @@ import { APIMovieResponse, Credits, Keywords, MovieDetail } from '../../models/M
 import { GetMovieArgs, MovieIdArgs } from '../../models/MovieQuestAPIArgs';
 
 export const movieQuestApi = createApi({
-	reducerPath: 'apiName',
+	reducerPath: 'movieQuestApi',
 	baseQuery: fetchBaseQuery({
 		baseUrl: BASE_URL,
 		prepareHeaders: headers => headers.set('Authorization', `Bearer ${TOKEN}`),
