@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_KEY, BASE_URL, DISCOVER, LANGUAGE, MINIMUM_VOTE, POPULARITY_VALUE, TAG, TOKEN } from '../endpoints';
 import { APIMovieResponse, Credits, Keywords, MovieDetail } from '../../models/MovieResponse';
-import { GetMovieArgs, MovieIdArgs } from '../../models/MovieQuestAPIArgs';
+import { GetMoviesArgs, MovieIdArgs } from '../../models/MovieQuestAPIArgs';
 
 export const movieQuestApi = createApi({
 	reducerPath: 'movieQuestApi',
@@ -10,7 +10,7 @@ export const movieQuestApi = createApi({
 		prepareHeaders: headers => headers.set('Authorization', `Bearer ${TOKEN}`),
 	}),
 	endpoints: build => ({
-		getRandomMovies: build.query<APIMovieResponse, GetMovieArgs>({
+		getRandomMovies: build.query<APIMovieResponse, GetMoviesArgs>({
 			query: ({ page }) =>
 				`${DISCOVER}/${TAG}?api_key=${API_KEY}&language=${LANGUAGE}&include_adult=false&vote_count.gte=${POPULARITY_VALUE}&vote_average.gte=${MINIMUM_VOTE}&sort_by=popularity.desc&page=${page}`,
 		}),

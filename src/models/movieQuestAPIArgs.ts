@@ -1,4 +1,4 @@
-export type GetMovieArgs = {
+export type GetMoviesArgs = {
 	page?: number;
 	runtime?: number | null;
 	genres?: number[] | null;
