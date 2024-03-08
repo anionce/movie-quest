@@ -1,6 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
-import { useSelector } from 'react-redux';
 
 export type ScoreBoardState = { points: number; movie: string | undefined };
 

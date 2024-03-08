@@ -13,7 +13,7 @@ export const GameFooter = ({ refreshPage }: GameFooterProps) => {
 	return (
 		<div className='game-footer-container'>
 			<FooterButton value={<HelpOutlineIcon />} type='help' action={() => ''} />
-			{points}
+			{`${points}p`}
 			<FooterButton value={<LoopIcon />} type='reset' action={refreshPage} />
 		</div>
 	);
