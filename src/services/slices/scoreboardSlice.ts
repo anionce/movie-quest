@@ -16,6 +16,10 @@ export const scoreboardSlice = createSlice({
 			state.movie = action.payload;
 		},
 		decreaseScore: (state, action: PayloadAction<number>) => {
+			if (state.points === 0) {
+				state.points = 0;
+				return;
+			}
 			if (action.payload === 0) {
 				state.points -= 20;
 			}
@@ -24,6 +28,9 @@ export const scoreboardSlice = createSlice({
 			}
 			if (action.payload === 2) {
 				state.points -= 20;
+			}
+			if (action.payload === 3) {
+				state.points -= 10;
 			}
 		},
 		resetScore: state => {

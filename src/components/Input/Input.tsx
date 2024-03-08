@@ -7,9 +7,10 @@ import { useState } from 'react';
 type InputProps = {
 	searchableResults: string[];
 	guessMovie: (movie: string) => void;
+	setGameError: (error: boolean) => void;
 };
 
-export const Input = ({ searchableResults, guessMovie }: InputProps) => {
+export const Input = ({ searchableResults, guessMovie, setGameError }: InputProps) => {
 	const [inputValue, setInputValue] = useState('');
 
 	return (
@@ -24,7 +25,10 @@ export const Input = ({ searchableResults, guessMovie }: InputProps) => {
 				}}
 				disableClearable={true}
 				className='input-button'
-				onChange={(_, newValue) => setInputValue(newValue)}
+				onChange={(_, newValue) => {
+					setGameError(false);
+					setInputValue(newValue);
+				}}
 				renderInput={params => (
 					<TextField
 						{...params}
@@ -35,7 +39,12 @@ export const Input = ({ searchableResults, guessMovie }: InputProps) => {
 					/>
 				)}
 			/>
-			<GuessButton guessMovie={() => guessMovie(inputValue)} />
+			<GuessButton
+				guessMovie={() => {
+					setGameError(false);
+					guessMovie(inputValue);
+				}}
+			/>
 		</div>
 	);
 };

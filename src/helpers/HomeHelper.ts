@@ -1,9 +1,7 @@
 export const getRandomValue = (value: number) => {
-	if (value <= 1) {
-		return 1;
-	} else {
-		return Math.floor(Math.random() * value);
-	}
+	const result = Math.floor(Math.random() * value) + 1;
+	console.log(result, 'result');
+	return result;
 };
 export const getTruncatedGenre = (genres: string | undefined) => {
 	const trimmedString = genres?.substring(0, 35);

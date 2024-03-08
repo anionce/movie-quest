@@ -5,3 +5,13 @@
 	align-items: center;
 	font-weight: bold;
 }
+
+.game-footer-points {
+	display: flex;
+	justify-content: center;
+	font-size: $font-size-xs;
+}
+
+.game-error {
+	color: $color-red;
+}
