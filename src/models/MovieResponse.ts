@@ -51,7 +51,10 @@ export type MovieDetail = Movie & {
 	spoken_languages: SpokenLanguage[];
 	status: string;
 	tagline: string;
+	genres: GenreDetail[];
 };
+
+export type GenreDetail = { id: number; name: string };
 
 export type Keywords = {
 	id: number;

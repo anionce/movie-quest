@@ -1,0 +1,14 @@
+.rules-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: $font-size-md;
+	font-family: $main-font;
+	font-weight: bold;
+	padding: 14px;
+	border: 2.5px solid $color-black;
+	color: $color-black;
+	background-color: $color-white;
+	border-radius: 6px;
+	box-shadow: 6px 7px 0px -3px $color-black;
+}

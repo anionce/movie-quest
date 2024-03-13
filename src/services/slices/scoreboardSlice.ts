@@ -16,21 +16,17 @@ export const scoreboardSlice = createSlice({
 			state.movie = action.payload;
 		},
 		decreaseScore: (state, action: PayloadAction<number>) => {
+			const pointDeductions: { [key: number]: number } = {
+				0: 20,
+				1: 40,
+				2: 20,
+				3: 10,
+			};
+
 			if (state.points === 0) {
 				state.points = 0;
-				return;
-			}
-			if (action.payload === 0) {
-				state.points -= 20;
-			}
-			if (action.payload === 1) {
-				state.points -= 40;
-			}
-			if (action.payload === 2) {
-				state.points -= 20;
-			}
-			if (action.payload === 3) {
-				state.points -= 10;
+			} else if (pointDeductions.hasOwnProperty(action.payload)) {
+				state.points -= pointDeductions[action.payload];
 			}
 		},
 		resetScore: state => {
