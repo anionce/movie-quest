@@ -13,7 +13,6 @@ import { decreaseScore, resetScore, setMovie } from '../../services/slices/score
 import { useAppDispatch } from '../../store';
 import { Loader } from '../../components/Loader/Loader';
 import { useGetMovieData } from '../../hooks/useGetMovieData';
-import { use } from 'i18next';
 
 export const Home = () => {
 	const navigate = useNavigate();
