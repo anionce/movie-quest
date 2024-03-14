@@ -50,3 +50,9 @@ button {
 	box-shadow: 6px 7px 0px -3px $color-black;
 	cursor: pointer;
 }
+
+@media only screen and (max-height: $md) {
+	button {
+		font-size: $font-size-xs;
+	}
+}

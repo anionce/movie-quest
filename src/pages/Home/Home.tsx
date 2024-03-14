@@ -13,6 +13,8 @@ import { decreaseScore, resetScore, setMovie } from '../../services/slices/score
 import { useAppDispatch } from '../../store';
 import { Loader } from '../../components/Loader/Loader';
 import { useGetMovieData } from '../../hooks/useGetMovieData';
+import { Rules } from '../../components/Rules/Rules';
+import { Modal } from '../../components/Modal/Modal';
 
 export const Home = () => {
 	const navigate = useNavigate();
@@ -44,6 +46,7 @@ export const Home = () => {
 		tagline: false,
 		actor: false,
 	});
+	const [showModal, setShowModal] = useState(false);
 
 	const shouldShowFirstClues = movieToGuess?.title && movieClues?.genres && movieClues?.year;
 	const isLoading = isLoadingMovieData || !shouldShowFirstClues;
@@ -97,6 +100,10 @@ export const Home = () => {
 				setGameError(true);
 			}
 		}
+	};
+
+	const toggleModal = () => {
+		setShowModal(!showModal);
 	};
 
 	useEffect(() => {
@@ -194,8 +201,6 @@ export const Home = () => {
 		}
 	}, [shouldRefresh]);
 
-	console.log('genre:', movieClues?.genres);
-
 	return (
 		<div className='home-container'>
 			{isLoading && <Loader />}
@@ -227,7 +232,12 @@ export const Home = () => {
 				</div>
 			)}
 			<MoreButton getMoreClues={getMoreClues} gameFinished={toggleClues.actor} />
-			<GameFooter refreshPage={refreshPage} error={gameError} />
+			<GameFooter refreshPage={refreshPage} error={gameError} toggleModal={toggleModal} />
+			{showModal && (
+				<Modal toggleModal={toggleModal}>
+					<Rules />
+				</Modal>
+			)}
 		</div>
 	);
 };

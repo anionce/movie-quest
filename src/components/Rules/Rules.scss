@@ -2,13 +2,28 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: $font-size-md;
+	font-size: $font-size-xs;
 	font-family: $main-font;
-	font-weight: bold;
+	font-weight: 500;
 	padding: 14px;
 	border: 2.5px solid $color-black;
 	color: $color-black;
 	background-color: $color-white;
 	border-radius: 6px;
 	box-shadow: 6px 7px 0px -3px $color-black;
+	max-width: 300px;
+
+	ul {
+		padding: 0 24px;
+	}
+
+	li {
+		padding: 4px;
+	}
+}
+
+.modal-icon {
+	display: flex;
+	justify-content: center;
+	color: $color-blue;
 }
