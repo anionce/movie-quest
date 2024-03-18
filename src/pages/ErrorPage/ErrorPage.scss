@@ -1,17 +1,7 @@
-@media only screen and (max-width: $lg) {
-}
-
-@media only screen and (max-width: $sm) {
-}
-
 .error-container {
 	display: flex;
 	flex-direction: column;
 	justify-items: center;
 	align-items: center;
 	gap: 0;
-
-	img {
-		width: 300px;
-	}
 }

@@ -11,6 +11,7 @@
 }
 
 .hangman-figure__char {
-	font-weight: bolder;
+	font-weight: 500;
 	font-size: $font-size-s;
+	font-family: $main-font;
 }

@@ -10,7 +10,7 @@ export const Header = () => {
 					<img alt='movie-quest-logo' src={Logo} className='logo' />
 				</Link>
 			</div>
-			<div className='header-separator'> </div>
+			<div className='header-separator'></div>
 		</>
 	);
 };

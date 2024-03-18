@@ -1,7 +1,7 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import './Input.scss';
 import TextField from '@mui/material/TextField';
-import { GuessButton } from '../GuessButton.tsx/GuessButton';
+import { GuessButton } from '../GuessButton/GuessButton';
 import { useState } from 'react';
 
 type InputProps = {
@@ -26,8 +26,12 @@ export const Input = ({ searchableResults, guessMovie, setGameError }: InputProp
 				disableClearable={true}
 				className='input-button'
 				onChange={(_, newValue) => {
-					setGameError(false);
 					setInputValue(newValue);
+				}}
+				onInputChange={(_, newInputValue) => {
+					if (newInputValue === '') {
+						setGameError(false);
+					}
 				}}
 				renderInput={params => (
 					<TextField

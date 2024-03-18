@@ -78,33 +78,3 @@ export type Credits = {
 		order: number;
 	}[];
 };
-
-export type AvailabilityInfo = {
-	display_priority: number;
-	logo_path: string;
-	provider_id: number;
-	provider_name: string;
-};
-
-export enum CountryCodes {
-	ES = 'ES',
-}
-
-type StreamingResults = Record<CountryCodes, CountryResults>;
-
-export type CountryResults = {
-	rent?: AvailabilityInfo[];
-	buy?: AvailabilityInfo[];
-	flatrate?: AvailabilityInfo[];
-	link: string;
-};
-
-export type StreamingDetail = Movie & {
-	id: number;
-	results: StreamingResults;
-};
-
-export type CompleteMovie = Movie & {
-	detailData: { data: MovieDetail };
-	streamingData: { data: CountryResults };
-};
