@@ -60,7 +60,13 @@ export const Home = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [neededClues, setNeededClues] = useState<number>(0);
 
-	const shouldShowFirstClues = movieToGuess?.title && movieClues?.genres && movieClues?.year;
+	const shouldShowFirstClues =
+		movieToGuess?.title &&
+		movieClues?.genres &&
+		movieClues?.year &&
+		movieDetails?.tagline &&
+		movieKeywords &&
+		movieCast;
 	const isLoading = isLoadingMovieData || !shouldShowFirstClues;
 	const shouldShowInput = shouldShowFirstClues;
 	const shouldShowKeywords = movieClues?.tags && toggleClues.keywords;
@@ -217,8 +223,7 @@ export const Home = () => {
 				actor: getRandomActor(movieCast),
 			}));
 		} else if (!movieDetails?.tagline || !movieKeywords) {
-			console.log('missing tagline or keywords', data, movieDetails, movieKeywords);
-			triggerGetMovies({ page: 9 });
+			setShouldRefresh(true);
 		}
 	}, [movieDetails, movieKeywords, movieCast]);
 
@@ -228,7 +233,7 @@ export const Home = () => {
 		if (isLoading) {
 			timeoutId = setTimeout(() => {
 				setShouldRefresh(true);
-			}, 4000);
+			}, 3000);
 		}
 
 		return () => {

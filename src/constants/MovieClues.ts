@@ -23,10 +23,10 @@ export type ClueCounterUpdates = {
 	};
 };
 
-export const availableClueLetter = ['a', 'e', 't'];
+export const availableClueLetter = ['a', 'e', 'm'];
 
 export const clueLettersRecord: Record<number, string> = {
 	1: 'a',
 	2: 'e',
-	3: 't',
+	3: 'm',
 };
