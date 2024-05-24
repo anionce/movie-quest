@@ -9,13 +9,12 @@ import { MoreButton } from '../../components/MoreButton/MoreButton';
 import { Hangman } from '../../components/Hangman/Hangman';
 import { useNavigate } from 'react-router-dom';
 import { GameFooter } from '../../components/GameFooter/GameFooter';
-import { decreaseClues, resetClues, selectCluesLeft, setClues, setMovie } from '../../services/slices/scoreboardSlice';
+import { decreaseClues, resetClues, setClues, setMovie } from '../../services/slices/scoreboardSlice';
 import { useAppDispatch } from '../../store';
 import { Loader } from '../../components/Loader/Loader';
 import { useGetMovieData } from '../../hooks/useGetMovieData';
 import { Rules } from '../../components/Rules/Rules';
 import { Modal } from '../../components/Modal/Modal';
-import { useSelector } from 'react-redux';
 
 export const Home = () => {
 	const navigate = useNavigate();
@@ -51,8 +50,6 @@ export const Home = () => {
 	const [lettersToReveal, setLettersToReveal] = useState<number>(0);
 	const [additionalClues, setAdditionalClues] = useState<number>(0);
 	const [revealedLetters, setRevealedLetters] = useState<string[]>([]);
-
-	const cluesLeft = useSelector(selectCluesLeft);
 
 	const shouldShowFirstClues =
 		movieToGuess?.title &&

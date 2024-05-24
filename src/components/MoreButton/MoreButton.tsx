@@ -1,6 +1,5 @@
 import './MoreButton.scss';
 import SearchIcon from '@mui/icons-material/Search';
-import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import { useNavigate } from 'react-router-dom';
 
 export type MoreButtonProps = { getMoreClues: () => void; gameFinished: boolean };
@@ -15,7 +14,7 @@ export const MoreButton = ({ getMoreClues, gameFinished }: MoreButtonProps) => {
 
 	return (
 		<button onClick={gameFinished ? goToLosePage : getMoreClues} className={getClass()}>
-			{gameFinished ? <SentimentVeryDissatisfiedIcon /> : <SearchIcon />}
+			{gameFinished ? <span className='check-result'>Check out result</span> : <SearchIcon />}
 		</button>
 	);
 };

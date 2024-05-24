@@ -12,6 +12,10 @@
 	margin: 24px 0 8px 0;
 }
 
+.check-result {
+	font-size: $font-size-s;
+}
+
 @media only screen and (max-height: $md) {
 	.lost-button {
 		margin: 4px 0;

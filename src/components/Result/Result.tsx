@@ -20,6 +20,15 @@ export const Result = ({ result }: ResultProps) => {
 
 	const goHome = () => navigate('/');
 
+	let scoreText;
+	if (result === 'win') {
+		scoreText = `${finalScore} point${finalScore > 1 || finalScore === 0 ? 's' : ''}${
+			finalScore > 0 ? '!' : ' :/'
+		}`;
+	} else {
+		scoreText = 'You lost...';
+	}
+
 	return (
 		<div className='result-container'>
 			<ClueButton value={movieResult} type='result' />
@@ -27,7 +36,7 @@ export const Result = ({ result }: ResultProps) => {
 				{result === 'win' ? <CheckCircleIcon className='correct' /> : <DangerousIcon className='incorrect' />}
 			</div>
 			<div>
-				<span>{result === 'win' ? `${finalScore} points!` : 'You lost...'}</span>
+				<span>{scoreText}</span>
 			</div>
 			<FooterButton value={<LoopIcon />} type='home' action={goHome} />
 		</div>
