@@ -3,19 +3,23 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import LoopIcon from '@mui/icons-material/Loop';
 import { FooterButton } from '../FooterButton/FooterButton';
 import { useSelector } from 'react-redux';
-import { selectPoints } from '../../services/slices/scoreboardSlice';
+import { selectCluesLeft } from '../../services/slices/scoreboardSlice';
+import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 
 export type GameFooterProps = { refreshPage: () => void; error: boolean; toggleModal: () => void };
 
 export const GameFooter = ({ refreshPage, error, toggleModal }: GameFooterProps) => {
-	const points = useSelector(selectPoints);
+	const cluesLeft = useSelector(selectCluesLeft);
 
-	const getClass = !error ? 'game-footer-points' : 'game-footer-points game-error';
+	const getClass = !error ? 'game-footer-clues' : 'game-footer-clues game-error';
 
 	return (
 		<div className='game-footer-container'>
 			<FooterButton value={<HelpOutlineIcon />} type='help' action={toggleModal} />
-			<div className={getClass}>{`${points}p`}</div>
+			<div className={getClass}>
+				{cluesLeft}
+				<LightbulbOutlinedIcon />
+			</div>
 			<FooterButton value={<LoopIcon />} type='reset' action={refreshPage} />
 		</div>
 	);

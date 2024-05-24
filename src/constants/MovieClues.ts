@@ -7,8 +7,6 @@ export type MovieClues = {
 };
 
 export type ExtraClues = {
-	hangman: boolean;
-
 	keywords: boolean;
 	tagline: boolean;
 	actor: boolean;
@@ -26,7 +24,7 @@ export type ClueCounterUpdates = {
 export const availableClueLetter = ['a', 'e', 'm'];
 
 export const clueLettersRecord: Record<number, string> = {
-	1: 'a',
-	2: 'e',
+	5: 'a',
+	4: 'e',
 	3: 'm',
 };

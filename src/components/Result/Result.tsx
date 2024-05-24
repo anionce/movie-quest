@@ -3,7 +3,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 import LoopIcon from '@mui/icons-material/Loop';
 import './Result.scss';
-import { selectMovie, selectPoints } from '../../services/slices/scoreboardSlice';
+import { selectMovie, selectCluesLeft } from '../../services/slices/scoreboardSlice';
 import { useSelector } from 'react-redux';
 import { FooterButton } from '../FooterButton/FooterButton';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +16,7 @@ export const Result = ({ result }: ResultProps) => {
 	const navigate = useNavigate();
 
 	const movieResult = useSelector(selectMovie);
-	const finalScore = useSelector(selectPoints);
+	const finalScore = useSelector(selectCluesLeft);
 
 	const goHome = () => navigate('/');
 

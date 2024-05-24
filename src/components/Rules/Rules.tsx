@@ -18,13 +18,10 @@ export const Rules = () => {
 				</li>
 				<li>Feeling stuck? No worries! Click on the magnifying glass for more clues.</li>
 				<li>
-					If you see a red button with a sad face, it means you've exhausted all the clues. Don't stress! You
-					can still opt to reveal the correct answer.
+					If you see a red button with a sad face, it means there are no more clues to be revealed. Don't
+					stress! You can still opt to reveal the correct answer.
 				</li>
-				<li>
-					Your score depends on how many clues you needed and how many times you missed. So, give it your best
-					shot and have fun!
-				</li>
+				<li>Give it your best shot and have fun!</li>
 			</ul>
 			<div className='modal-icon'>
 				<MovieFilterIcon />

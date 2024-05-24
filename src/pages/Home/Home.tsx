@@ -1,20 +1,21 @@
-import { Dispatch, useEffect, useRef, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import './Home.scss';
 import { getRandomActor, getRandomValue, getTruncatedGenre } from '../../helpers/HomeHelper';
 import { GenreDetail, Movie } from '../../models/MovieResponse';
 import { ClueButton } from '../../components/ClueButton/ClueButton';
-import { ClueCounterUpdates, ExtraClues, MovieClues } from '../../constants/MovieClues';
+import { ExtraClues, MovieClues, availableClueLetter } from '../../constants/MovieClues';
 import { Input } from '../../components/Input/Input';
 import { MoreButton } from '../../components/MoreButton/MoreButton';
 import { Hangman } from '../../components/Hangman/Hangman';
 import { useNavigate } from 'react-router-dom';
 import { GameFooter } from '../../components/GameFooter/GameFooter';
-import { decreaseScore, resetScore, setMovie } from '../../services/slices/scoreboardSlice';
+import { decreaseClues, resetClues, selectCluesLeft, setClues, setMovie } from '../../services/slices/scoreboardSlice';
 import { useAppDispatch } from '../../store';
 import { Loader } from '../../components/Loader/Loader';
 import { useGetMovieData } from '../../hooks/useGetMovieData';
 import { Rules } from '../../components/Rules/Rules';
 import { Modal } from '../../components/Modal/Modal';
+import { useSelector } from 'react-redux';
 
 export const Home = () => {
 	const navigate = useNavigate();
@@ -39,26 +40,19 @@ export const Home = () => {
 	const [movieToGuess, setMovieToGuess] = useState<Movie | undefined>(undefined);
 	const [movieClues, setMovieClues] = useState<MovieClues | undefined>(undefined);
 	const [searchableResults, setSearchableResults] = useState<string[]>([]);
-	const [clueCounter, setClueCounter] = useState<number>(0);
-	const prevClueCounter = usePrevious(clueCounter);
-
-	function usePrevious(value: any) {
-		const ref = useRef();
-		useEffect(() => {
-			ref.current = value;
-		}, [value]);
-		return ref.current;
-	}
 
 	const [gameError, setGameError] = useState<boolean>(false);
 	const [toggleClues, setToggleClues] = useState<ExtraClues>({
-		hangman: false,
 		keywords: false,
 		tagline: false,
 		actor: false,
 	});
 	const [showModal, setShowModal] = useState(false);
-	const [neededClues, setNeededClues] = useState<number>(0);
+	const [lettersToReveal, setLettersToReveal] = useState<number>(0);
+	const [additionalClues, setAdditionalClues] = useState<number>(0);
+	const [revealedLetters, setRevealedLetters] = useState<string[]>([]);
+
+	const cluesLeft = useSelector(selectCluesLeft);
 
 	const shouldShowFirstClues =
 		movieToGuess?.title &&
@@ -75,20 +69,19 @@ export const Home = () => {
 
 	const refreshPage = () => {
 		setShouldRefresh(false);
+		dispatch(resetClues());
 		setMovieClues(undefined);
 		setTotalPages(undefined);
 		setMovieToGuess(undefined);
 		setSearchableResults([]);
-		setClueCounter(0);
-		setNeededClues(0);
+		setLettersToReveal(0);
+		setRevealedLetters([]);
+		setAdditionalClues(0);
 		setToggleClues({
-			hangman: false,
 			keywords: false,
 			tagline: false,
 			actor: false,
 		});
-
-		dispatch(resetScore());
 		navigate('/');
 		const randomPage = getRandomValue(10);
 		triggerPages({ page: randomPage });
@@ -96,8 +89,31 @@ export const Home = () => {
 
 	const getMoreClues = () => {
 		setGameError(false);
-		setClueCounter(prev => prev + 1);
-		dispatch(decreaseScore(clueCounter));
+		dispatch(decreaseClues());
+		if (lettersToReveal) {
+			revealLettersBasedOnClue();
+		} else {
+			if (!toggleClues.keywords) {
+				return setToggleClues(prev => ({ ...prev, keywords: true }));
+			}
+			if (toggleClues.keywords && !toggleClues.tagline) {
+				return setToggleClues(prev => ({ ...prev, tagline: true }));
+			}
+			if (toggleClues.tagline && !toggleClues.actor) {
+				return setToggleClues(prev => ({ ...prev, actor: true }));
+			}
+		}
+	};
+
+	const updateNeededClues = (movie: string) => {
+		let includedLetters: string[] = [];
+		availableClueLetter.forEach(letter => {
+			if (movie.toLowerCase().includes(letter.toLowerCase()) && !includedLetters.includes(letter)) {
+				includedLetters.push(letter);
+			}
+		});
+		setAdditionalClues(includedLetters.length);
+		setLettersToReveal(includedLetters.length);
 	};
 
 	const getMoreMovies = async () => {
@@ -123,7 +139,7 @@ export const Home = () => {
 			if (isMatch) {
 				navigate('/win');
 			} else {
-				dispatch(decreaseScore(3));
+				dispatch(decreaseClues());
 				setGameError(true);
 			}
 		}
@@ -134,37 +150,8 @@ export const Home = () => {
 	};
 
 	useEffect(() => {
-		dispatch(resetScore());
 		triggerPages({ page: 11 });
 	}, []);
-
-	useEffect(() => {
-		const clueCounterUpdates: ClueCounterUpdates = {
-			1: { hangman: true },
-			4: { keywords: true },
-			5: { tagline: true },
-			6: { actor: true },
-		};
-
-		if (clueCounter > 0 && clueCounter < 5) {
-			if (neededClues === 0 && (prevClueCounter ?? 0) < 4) {
-				setClueCounter(4);
-			}
-			if (neededClues === 1 && (prevClueCounter ?? 0) <= 2) {
-				setClueCounter(3);
-			}
-			if (neededClues === 2 && (prevClueCounter ?? 0) <= 1) {
-				setClueCounter(2);
-			}
-			if (neededClues === 3 && (prevClueCounter ?? 0) === 0) {
-				setClueCounter(1);
-			}
-		}
-
-		if (clueCounterUpdates.hasOwnProperty(clueCounter)) {
-			setToggleClues(prev => ({ ...prev, ...clueCounterUpdates[clueCounter] }));
-		}
-	}, [clueCounter, neededClues]);
 
 	useEffect(() => {
 		if (data) {
@@ -190,7 +177,12 @@ export const Home = () => {
 	}, [movieData]);
 
 	useEffect(() => {
+		dispatch(setClues(additionalClues));
+	}, [additionalClues]);
+
+	useEffect(() => {
 		if (movieToGuess) {
+			updateNeededClues(movieToGuess.title);
 			triggerDetails({ id: movieToGuess.id });
 			triggerKeywords({ id: movieToGuess.id });
 			triggerCasting({ id: movieToGuess.id });
@@ -247,6 +239,36 @@ export const Home = () => {
 		}
 	}, [shouldRefresh]);
 
+	const revealLettersBasedOnClue = () => {
+		if (movieToGuess?.title.toLowerCase().includes('a') && !revealedLetters.includes('a')) {
+			revealLetter('A'.toLowerCase());
+			revealLetter('a'.toUpperCase());
+			setLettersToReveal(prev => prev - 1);
+			return;
+		}
+		if (movieToGuess?.title.toLowerCase().includes('e') && !revealedLetters.includes('e')) {
+			revealLetter('E'.toLowerCase());
+			revealLetter('e'.toUpperCase());
+			setLettersToReveal(prev => prev - 1);
+			return;
+		}
+		if (movieToGuess?.title.toLowerCase().includes('m') && !revealedLetters.includes('m')) {
+			revealLetter('M'.toLowerCase());
+			revealLetter('m'.toUpperCase());
+			setLettersToReveal(prev => prev - 1);
+			return;
+		}
+	};
+
+	const revealLetter = (letter: string) => {
+		setRevealedLetters(prevLetters => {
+			if (!prevLetters.includes(letter)) {
+				return [...prevLetters, letter];
+			}
+			return prevLetters;
+		});
+	};
+
 	return (
 		<div className='home-container'>
 			{isLoading && <Loader />}
@@ -264,11 +286,7 @@ export const Home = () => {
 							<div className='clues-container'>
 								<ClueButton value={movieClues.year} type='year' />
 								<ClueButton value={movieClues.genres} type='genre' />
-								<Hangman
-									value={movieToGuess.title}
-									clueCounter={clueCounter}
-									setNeededClues={setNeededClues}
-								/>
+								<Hangman value={movieToGuess.title} revealedLetters={revealedLetters} />
 							</div>
 						)}
 						{shouldShowKeywords && (
