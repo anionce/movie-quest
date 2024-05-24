@@ -9,12 +9,13 @@ import { MoreButton } from '../../components/MoreButton/MoreButton';
 import { Hangman } from '../../components/Hangman/Hangman';
 import { useNavigate } from 'react-router-dom';
 import { GameFooter } from '../../components/GameFooter/GameFooter';
-import { decreaseClues, resetClues, setClues, setMovie } from '../../services/slices/scoreboardSlice';
+import { decreaseClues, resetClues, selectCluesLeft, setClues, setMovie } from '../../services/slices/scoreboardSlice';
 import { useAppDispatch } from '../../store';
 import { Loader } from '../../components/Loader/Loader';
 import { useGetMovieData } from '../../hooks/useGetMovieData';
 import { Rules } from '../../components/Rules/Rules';
 import { Modal } from '../../components/Modal/Modal';
+import { useSelector } from 'react-redux';
 
 export const Home = () => {
 	const navigate = useNavigate();
@@ -51,6 +52,8 @@ export const Home = () => {
 	const [additionalClues, setAdditionalClues] = useState<number>(0);
 	const [revealedLetters, setRevealedLetters] = useState<string[]>([]);
 
+	const cluesLeft = useSelector(selectCluesLeft);
+
 	const shouldShowFirstClues =
 		movieToGuess?.title &&
 		movieClues?.genres &&
@@ -63,6 +66,8 @@ export const Home = () => {
 	const shouldShowKeywords = movieClues?.tags && toggleClues.keywords;
 	const shouldShowTagline = movieClues?.tagline && toggleClues.tagline;
 	const shouldShowActor = movieClues?.actor && toggleClues.actor;
+
+	const isGameFinished = toggleClues.actor || cluesLeft === 0;
 
 	const refreshPage = () => {
 		setShouldRefresh(false);
@@ -125,7 +130,10 @@ export const Home = () => {
 			.map(result => result?.data?.results.map((movie: Movie) => movie.title))
 			.flat() as string[];
 
-		const uniqueTitles = titleArray.filter(title => !searchableResults.includes(title));
+		const newArray = titleArray.filter(title => !searchableResults.includes(title));
+
+		const uniqueTitles = newArray.filter((title, index) => newArray.indexOf(title) === index);
+
 		setSearchableResults(prev => [...prev, ...uniqueTitles]);
 	};
 
@@ -168,10 +176,14 @@ export const Home = () => {
 
 			const titleArray = movieData.results.map((movie: Movie) => movie.title);
 			setSearchableResults(titleArray);
-
-			getMoreMovies();
 		}
 	}, [movieData]);
+
+	useEffect(() => {
+		if (searchableResults.length === 20) {
+			getMoreMovies();
+		}
+	}, [searchableResults]);
 
 	useEffect(() => {
 		dispatch(setClues(additionalClues));
@@ -296,7 +308,7 @@ export const Home = () => {
 						{shouldShowTagline && <ClueButton value={movieClues.tagline} type='tagline' />}
 						{shouldShowActor && <ClueButton value={movieClues.actor} type='actor' />}
 					</div>
-					<MoreButton getMoreClues={getMoreClues} gameFinished={toggleClues.actor} />
+					<MoreButton getMoreClues={getMoreClues} gameFinished={isGameFinished} />
 					<GameFooter refreshPage={refreshPage} error={gameError} toggleModal={toggleModal} />
 				</>
 			)}

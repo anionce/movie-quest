@@ -1,6 +1,18 @@
 @import '../../assets/styles/variables.scss';
 
 .guess-button {
-	width: 30px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100px;
 	background-color: $color-green;
+
+	span {
+		font-size: $font-size-xs;
+	}
+}
+
+.button-disabled {
+	cursor: not-allowed;
+	opacity: 0.3;
 }

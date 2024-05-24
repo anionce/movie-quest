@@ -31,6 +31,7 @@ export const Input = ({ searchableResults, guessMovie, setGameError }: InputProp
 				onInputChange={(_, newInputValue) => {
 					if (newInputValue === '') {
 						setGameError(false);
+						setInputValue(newInputValue);
 					}
 				}}
 				renderInput={params => (
@@ -48,6 +49,7 @@ export const Input = ({ searchableResults, guessMovie, setGameError }: InputProp
 					setGameError(false);
 					guessMovie(inputValue);
 				}}
+				value={inputValue}
 			/>
 		</div>
 	);

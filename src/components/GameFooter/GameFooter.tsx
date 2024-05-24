@@ -11,7 +11,9 @@ export type GameFooterProps = { refreshPage: () => void; error: boolean; toggleM
 export const GameFooter = ({ refreshPage, error, toggleModal }: GameFooterProps) => {
 	const cluesLeft = useSelector(selectCluesLeft);
 
-	const getClass = !error ? 'game-footer-clues' : 'game-footer-clues game-error';
+	const shouldShowGameError = error || cluesLeft === 0;
+
+	const getClass = !shouldShowGameError ? 'game-footer-clues' : 'game-footer-clues game-error';
 
 	return (
 		<div className='game-footer-container'>

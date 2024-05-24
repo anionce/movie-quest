@@ -16,6 +16,15 @@
 	font-size: $font-size-s;
 }
 
+.get-hint {
+	display: flex;
+	align-items: center;
+
+	span {
+		font-size: $font-size-s;
+	}
+}
+
 @media only screen and (max-height: $md) {
 	.lost-button {
 		margin: 4px 0;

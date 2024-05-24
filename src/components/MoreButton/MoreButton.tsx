@@ -14,7 +14,14 @@ export const MoreButton = ({ getMoreClues, gameFinished }: MoreButtonProps) => {
 
 	return (
 		<button onClick={gameFinished ? goToLosePage : getMoreClues} className={getClass()}>
-			{gameFinished ? <span className='check-result'>Check out result</span> : <SearchIcon />}
+			{gameFinished ? (
+				<span className='check-result'>Check out result</span>
+			) : (
+				<div className='get-hint'>
+					<SearchIcon />
+					<span>Get hint</span>
+				</div>
+			)}
 		</button>
 	);
 };
