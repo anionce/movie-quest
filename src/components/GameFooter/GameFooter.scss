@@ -17,3 +17,9 @@
 .game-error {
 	color: $color-red;
 }
+
+@media only screen and (max-height: $md) {
+	.game-footer-container {
+		width: 325px;
+	}
+}

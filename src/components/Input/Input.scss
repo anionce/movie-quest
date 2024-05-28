@@ -2,12 +2,13 @@
 
 .input-container {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	gap: 16px;
 
 	& .MuiAutocomplete-root {
-		width: 250px;
+		width: 350px;
 	}
 
 	& .MuiInputBase-root {
@@ -37,6 +38,17 @@
 
 		& .MuiSvgIcon-root {
 			display: none;
+		}
+	}
+}
+
+@media only screen and (max-height: $md) {
+	.input-container {
+		margin: 4px 0;
+		flex-direction: row;
+
+		& .MuiAutocomplete-root {
+			width: 200px;
 		}
 	}
 }

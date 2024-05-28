@@ -29,10 +29,9 @@ body {
 	background-color: $color-orange;
 	font-family: $main-font;
 	display: flex;
-	place-items: center;
-	margin: 4px;
-	width: calc(100vw - 8px);
-	height: calc(100vh - 8px);
+	justify-content: center;
+	margin: 2px;
+	height: calc(100vh - 4px);
 }
 
 button {
@@ -54,5 +53,12 @@ button {
 @media only screen and (max-height: $md) {
 	button {
 		font-size: $font-size-xs;
+	}
+}
+
+@media only screen and (max-height: $md) {
+	body {
+		display: flex;
+		justify-content: center;
 	}
 }

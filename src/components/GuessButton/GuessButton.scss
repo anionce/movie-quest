@@ -4,12 +4,9 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	width: 100px;
+	width: 70px;
 	background-color: $color-green;
-
-	span {
-		font-size: $font-size-xs;
-	}
+	font-size: $font-size-xs;
 }
 
 .button-disabled {

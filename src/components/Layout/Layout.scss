@@ -1,6 +1,12 @@
 .layout-container {
 	display: flex;
-	margin: 16px;
 	height: 100vh;
 	flex-direction: column;
+	align-items: center;
+}
+
+@media only screen and (max-height: $md) {
+	.layout-container {
+		width: 300px;
+	}
 }

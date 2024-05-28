@@ -293,20 +293,35 @@ export const Home = () => {
 						)}
 						{shouldShowFirstClues && (
 							<div className='clues-container'>
-								<ClueButton value={movieClues.year} type='year' />
-								<ClueButton value={movieClues.genres} type='genre' />
+								<div className='first-clues-container'>
+									<ClueButton value={movieClues.year} type='year' />
+									<ClueButton value={movieClues.genres} type='genre' />
+								</div>
 								<Hangman value={movieToGuess.title} revealedLetters={revealedLetters} />
 							</div>
 						)}
 						{shouldShowKeywords && (
-							<div className='clues-container'>
-								{movieClues.tags?.map((tag, index) => (
-									<ClueButton key={index} value={tag} type={`tag-${index + 1}`} />
-								))}
+							<div className='keywords-container'>
+								<span className='clue-title'>Keywords:</span>
+								<div className='keywords'>
+									{movieClues.tags?.map((tag, index) => (
+										<ClueButton key={index} value={tag} type={`tag-${index + 1}`} />
+									))}
+								</div>
 							</div>
 						)}
-						{shouldShowTagline && <ClueButton value={movieClues.tagline} type='tagline' />}
-						{shouldShowActor && <ClueButton value={movieClues.actor} type='actor' />}
+						{shouldShowTagline && (
+							<div className='tagline-container'>
+								<span className='clue-title'>Tagline:</span>
+								<ClueButton value={movieClues.tagline} type='tagline' />
+							</div>
+						)}
+						{shouldShowActor && (
+							<div className='actor-container'>
+								<span className='clue-title'>Actor:</span>
+								<ClueButton value={movieClues.actor} type='actor' />
+							</div>
+						)}
 					</div>
 					<MoreButton getMoreClues={getMoreClues} gameFinished={isGameFinished} />
 					<GameFooter refreshPage={refreshPage} error={gameError} toggleModal={toggleModal} />
