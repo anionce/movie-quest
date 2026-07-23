@@ -2,23 +2,52 @@
 
 .loader-container {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	gap: 16px;
 	height: 100%;
 }
 
-.loader-emoji {
+.loader-reel {
 	display: flex;
-	justify-content: center;
-	font-size: $font-size-lg;
-	animation: rotation 1.5s infinite linear;
+	gap: 10px;
 }
 
-@keyframes rotation {
-	from {
-		transform: rotate(0deg);
+.loader-reel__hole {
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background-color: $color-primary;
+	animation: bounce 1s infinite ease-in-out;
+}
+
+.loader-reel__hole:nth-child(2) {
+	background-color: $color-pink;
+	animation-delay: 0.15s;
+}
+
+.loader-reel__hole:nth-child(3) {
+	background-color: $color-yellow;
+	animation-delay: 0.3s;
+}
+
+.loader-text {
+	font-family: $main-font;
+	font-size: $font-size-s;
+	font-weight: 600;
+	color: $color-muted;
+}
+
+@keyframes bounce {
+	0%,
+	80%,
+	100% {
+		transform: translateY(0);
+		opacity: 0.6;
 	}
-	to {
-		transform: rotate(359deg);
+	40% {
+		transform: translateY(-10px);
+		opacity: 1;
 	}
 }

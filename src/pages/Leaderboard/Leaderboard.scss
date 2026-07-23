@@ -1,0 +1,81 @@
+@import '../../assets/styles/variables';
+
+.leaderboard-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 14px;
+	height: 100%;
+	width: 100%;
+	padding: 8px 0;
+	overflow-y: auto;
+
+	h2 {
+		font-family: $display-font;
+		color: $color-ink;
+		margin: 0;
+	}
+}
+
+.leaderboard-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	background-color: $color-yellow;
+	color: $color-surface;
+	font-size: 30px;
+}
+
+.leaderboard-empty {
+	font-size: $font-size-xs;
+	color: $color-muted;
+	text-align: center;
+	max-width: 240px;
+}
+
+.leaderboard-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	max-width: 300px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+
+	li {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 10px 14px;
+		border-radius: $radius-card;
+		background-color: $color-surface;
+		box-shadow: $shadow-sm;
+		font-size: $font-size-xs;
+		font-weight: 600;
+		color: $color-ink;
+
+		&.lose {
+			opacity: 0.6;
+		}
+	}
+
+	.leaderboard-rank {
+		width: 20px;
+		color: $color-primary;
+	}
+
+	.leaderboard-movie {
+		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.leaderboard-score {
+		color: $color-primary-dark;
+	}
+}

@@ -1,17 +1,22 @@
+@import '../../assets/styles/variables.scss';
+
 .game-footer-container {
 	display: flex;
 	width: 100%;
 	justify-content: space-between;
 	align-items: center;
 	font-weight: bold;
-	margin-bottom: 16px;
+	margin-bottom: 12px;
+	flex-shrink: 0;
 }
 
 .game-footer-clues {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: $font-size-xs;
+	gap: 4px;
+	font-size: $font-size-md;
+	color: $color-ink;
 }
 
 .game-error {
@@ -20,6 +25,6 @@
 
 @media only screen and (max-height: $md) {
 	.game-footer-container {
-		width: 325px;
+		width: 100%;
 	}
 }

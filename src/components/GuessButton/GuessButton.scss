@@ -4,12 +4,14 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	width: 70px;
+	width: 76px;
 	background-color: $color-green;
+	color: $color-surface;
 	font-size: $font-size-xs;
 }
 
 .button-disabled {
 	cursor: not-allowed;
-	opacity: 0.3;
+	opacity: 0.4;
+	pointer-events: none;
 }

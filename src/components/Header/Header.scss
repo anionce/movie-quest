@@ -1,13 +1,63 @@
+@import '../../assets/styles/variables';
+
 .header-container {
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
-	gap: 24px;
-	width: calc(100vw - 40px);
+	width: 100%;
+	padding: 12px 20px 0;
+	flex-shrink: 0;
+}
+
+.header-side-link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	color: $color-primary;
+
+	&--placeholder {
+		visibility: hidden;
+	}
 }
 
 .logo {
-	margin-top: 8px;
-	width: 112px;
-	height: 75px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-family: $display-font;
+	font-size: $font-size-md;
+	font-weight: 500;
+	color: $color-ink;
+
+	strong {
+		font-weight: 700;
+		color: $color-primary;
+	}
+}
+
+.logo-icon {
+	color: $color-primary;
+}
+
+@media only screen and (max-height: $md) {
+	.logo {
+		font-size: $font-size-s;
+	}
+}
+
+@media only screen and (min-width: $lg) and (min-height: 720px) {
+	.logo {
+		font-size: $font-size-xl;
+	}
+
+	.header-side-link {
+		width: 44px;
+		height: 44px;
+
+		svg {
+			font-size: 30px;
+		}
+	}
 }

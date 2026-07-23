@@ -2,12 +2,18 @@
 
 .button-help {
 	background-color: $color-yellow;
+	width: 40px;
+	padding: 0;
 }
 
 .button-reset {
 	background-color: $color-green;
+	color: $color-surface;
+	width: 40px;
+	padding: 0;
 }
 
 .button-home {
-	background-color: $color-yellow;
+	background-color: $color-primary;
+	color: $color-surface;
 }

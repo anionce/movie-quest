@@ -1,13 +1,24 @@
 @import '/src/assets/styles/variables.scss';
 
+* {
+	box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+	height: 100%;
+	overflow: hidden;
+}
+
 :root {
 	font-family: 'Inter', 'Oxygen', 'Roboto', 'Segoe UI', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
 		'Helvetica Neue', sans-serif;
 	font-weight: 400;
 
-	color-scheme: light dark;
-	color: $color-black;
-	background-color: $color-black;
+	color-scheme: light;
+	color: $color-ink;
+	background-color: $color-bg;
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -17,21 +28,21 @@
 }
 
 a {
-	font-weight: 500;
-	color: $color-black;
+	font-weight: 600;
+	color: $color-primary;
 	text-decoration: inherit;
 }
 a:hover {
-	color: $color-black;
+	color: $color-primary-dark;
 }
 
 body {
-	background-color: $color-orange;
+	background-color: $color-bg;
 	font-family: $main-font;
 	display: flex;
 	justify-content: center;
-	margin: 2px;
-	height: calc(100vh - 4px);
+	margin: 0;
+	height: 100%;
 }
 
 button {
@@ -40,19 +51,31 @@ button {
 	align-items: center;
 	font-size: $font-size-md;
 	font-family: $main-font;
-	font-weight: bold;
-	height: 28px;
-	padding: 14px;
-	border: 2.5px solid $color-black;
-	color: $color-black;
-	border-radius: 6px;
-	box-shadow: 6px 7px 0px -3px $color-black;
+	font-weight: 700;
+	height: 40px;
+	padding: 10px 18px;
+	border: none;
+	color: $color-ink;
+	background-color: $color-surface;
+	border-radius: $radius-chip;
+	box-shadow: $shadow-sm;
 	cursor: pointer;
+	transition: box-shadow 0.15s ease;
+}
+
+button:hover {
+	box-shadow: $shadow-lg;
+}
+
+button:disabled {
+	box-shadow: $shadow-sm;
+	pointer-events: none;
 }
 
 @media only screen and (max-height: $md) {
 	button {
 		font-size: $font-size-xs;
+		height: 34px;
 	}
 }
 
@@ -60,5 +83,13 @@ button {
 	body {
 		display: flex;
 		justify-content: center;
+	}
+}
+
+@media only screen and (min-width: $lg) and (min-height: 720px) {
+	button {
+		font-size: $font-size-lg;
+		height: 52px;
+		padding: 12px 24px;
 	}
 }

@@ -1,40 +1,58 @@
 @import '../../assets/styles/variables.scss';
 
+button[class^='button-'] {
+	border-radius: $radius-chip;
+	font-weight: 600;
+}
+
 .button-year {
-	background-color: $color-purple;
+	background-color: $color-primary;
+	color: $color-surface;
 }
 
 .button-genre {
 	background-color: $color-yellow;
 	height: fit-content;
-	padding: 6px 8px;
+	padding: 8px 16px;
 }
 
 .button-tag-1 {
 	background-color: $color-green;
+	color: $color-surface;
 }
 
 .button-tag-2 {
-	background-color: $color-white;
+	background-color: $color-surface;
+	border: 1.5px solid $color-border;
 }
 
 .button-tag-3 {
-	background-color: $color-purple;
+	background-color: $color-primary;
+	color: $color-surface;
 }
 
 .button-tagline {
 	background-color: $color-blue;
 	font-size: $font-size-xs;
 	height: fit-content;
-	padding: 6px 8px;
+	padding: 8px 16px;
+	text-align: center;
 }
 
 .button-actor {
-	background-color: $color-yellow;
+	background-color: $color-pink;
 	margin-bottom: 4px;
 }
 
 .button-result {
 	height: fit-content;
-	background-color: $color-white;
+	background-color: $color-surface;
+	border: 1.5px solid $color-border;
+	font-family: $display-font;
+}
+
+@media only screen and (min-width: $lg) and (min-height: 720px) {
+	.button-tagline {
+		font-size: $font-size-md;
+	}
 }

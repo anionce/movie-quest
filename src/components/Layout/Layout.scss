@@ -1,12 +1,24 @@
+@import '../../assets/styles/variables';
+
 .layout-container {
 	display: flex;
 	height: 100vh;
+	max-height: 100vh;
 	flex-direction: column;
 	align-items: center;
+	width: 380px;
+	max-width: 100vw;
+	overflow: hidden;
 }
 
 @media only screen and (max-height: $md) {
 	.layout-container {
-		width: 300px;
+		width: 320px;
+	}
+}
+
+@media only screen and (min-width: $lg) and (min-height: 720px) {
+	.layout-container {
+		width: 520px;
 	}
 }

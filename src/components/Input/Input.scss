@@ -2,13 +2,16 @@
 
 .input-container {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	gap: 16px;
+	gap: 10px;
+	width: 100%;
+	flex-shrink: 0;
 
 	& .MuiAutocomplete-root {
-		width: 350px;
+		flex: 1;
+		max-width: 260px;
 	}
 
 	& .MuiInputBase-root {
@@ -16,15 +19,16 @@
 		align-items: center;
 		font-size: $font-size-xs;
 		font-family: $main-font;
-		font-weight: bold;
-		border: 2.5px solid $color-black;
-		border-radius: 6px;
-		padding-right: 6px !important;
-		box-shadow: 6px 7px 0px -3px $color-black;
-		background-color: $color-white;
+		font-weight: 600;
+		border: none;
+		border-radius: $radius-chip;
+		padding: 2px 14px !important;
+		box-shadow: $shadow-sm;
+		background-color: $color-surface;
+		color: $color-ink;
 
 		& .MuiInputBase-input {
-			padding: 2.5px 8px;
+			padding: 8px 4px;
 		}
 
 		fieldset {
@@ -42,13 +46,41 @@
 	}
 }
 
+.MuiAutocomplete-popper {
+	.MuiPaper-root {
+		border-radius: $radius-card;
+		box-shadow: $shadow-lg;
+		font-family: $main-font;
+		overflow: hidden;
+	}
+
+	.MuiAutocomplete-option {
+		font-size: $font-size-xs;
+	}
+}
+
 @media only screen and (max-height: $md) {
 	.input-container {
-		margin: 4px 0;
-		flex-direction: row;
+		margin: 0;
+	}
+}
 
+@media only screen and (min-width: $lg) and (min-height: 720px) {
+	.input-container {
 		& .MuiAutocomplete-root {
-			width: 200px;
+			max-width: 340px;
 		}
+
+		& .MuiInputBase-root {
+			font-size: $font-size-md;
+
+			& .MuiInputBase-input {
+				padding: 12px 6px;
+			}
+		}
+	}
+
+	.MuiAutocomplete-popper .MuiAutocomplete-option {
+		font-size: $font-size-md;
 	}
 }

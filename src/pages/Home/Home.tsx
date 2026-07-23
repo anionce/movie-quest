@@ -199,7 +199,7 @@ export const Home = () => {
 				year: movieToGuess.release_date.substring(0, 4),
 				genres: undefined,
 			});
-			dispatch(setMovie(movieToGuess.title));
+			dispatch(setMovie({ title: movieToGuess.title, posterPath: movieToGuess.poster_path }));
 		}
 	}, [movieToGuess]);
 
@@ -300,26 +300,30 @@ export const Home = () => {
 								<Hangman value={movieToGuess.title} revealedLetters={revealedLetters} />
 							</div>
 						)}
-						{shouldShowKeywords && (
-							<div className='keywords-container'>
-								<span className='clue-title'>Keywords:</span>
-								<div className='keywords'>
-									{movieClues.tags?.map((tag, index) => (
-										<ClueButton key={index} value={tag} type={`tag-${index + 1}`} />
-									))}
-								</div>
-							</div>
-						)}
-						{shouldShowTagline && (
-							<div className='tagline-container'>
-								<span className='clue-title'>Tagline:</span>
-								<ClueButton value={movieClues.tagline} type='tagline' />
-							</div>
-						)}
-						{shouldShowActor && (
-							<div className='actor-container'>
-								<span className='clue-title'>Actor:</span>
-								<ClueButton value={movieClues.actor} type='actor' />
+						{(shouldShowKeywords || shouldShowTagline || shouldShowActor) && (
+							<div className='extra-clues-container'>
+								{shouldShowKeywords && (
+									<div className='keywords-container'>
+										<span className='clue-title'>Keywords:</span>
+										<div className='keywords'>
+											{movieClues.tags?.map((tag, index) => (
+												<ClueButton key={index} value={tag} type={`tag-${index + 1}`} />
+											))}
+										</div>
+									</div>
+								)}
+								{shouldShowTagline && (
+									<div className='tagline-container'>
+										<span className='clue-title'>Tagline:</span>
+										<ClueButton value={movieClues.tagline} type='tagline' />
+									</div>
+								)}
+								{shouldShowActor && (
+									<div className='actor-container'>
+										<span className='clue-title'>Actor:</span>
+										<ClueButton value={movieClues.actor} type='actor' />
+									</div>
+								)}
 							</div>
 						)}
 					</div>

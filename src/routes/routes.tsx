@@ -2,11 +2,13 @@ import { RouteObject } from 'react-router-dom';
 import { Home } from '../pages/Home/Home';
 import { Win } from '../pages/Win/Win';
 import { Lose } from '../pages/Lose/Lose';
+import { Leaderboard } from '../pages/Leaderboard/Leaderboard';
 import { ErrorPage } from '../pages/ErrorPage/ErrorPage';
 
 export const PATH_OF_ROUTES = {
 	WIN: '/win',
 	LOSE: '/lose',
+	LEADERBOARD: '/leaderboard',
 };
 
 export const childrenRoutes: RouteObject[] = [
@@ -18,6 +20,10 @@ export const childrenRoutes: RouteObject[] = [
 	{
 		path: PATH_OF_ROUTES.LOSE,
 		element: <Lose />,
+	},
+	{
+		path: PATH_OF_ROUTES.LEADERBOARD,
+		element: <Leaderboard />,
 	},
 	{
 		path: '*',

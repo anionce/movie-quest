@@ -4,15 +4,40 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	word-break: normal;
-	white-space: pre-wrap;
-	line-height: 1;
-	margin-bottom: 2px;
-	font-size: $font-size-s;
+	align-items: flex-end;
+	row-gap: 16px;
+	column-gap: 28px;
+	max-width: 100%;
 }
 
-.hangman-figure__char {
-	font-weight: 500;
+.hangman-figure__word {
+	display: flex;
+	white-space: nowrap;
+	gap: 3px;
+}
+
+.hangman-figure__letter {
+	display: inline-flex;
+	align-items: flex-end;
+	justify-content: center;
+	width: 14px;
+	height: 20px;
+	border-bottom: 3px solid $color-border;
+	font-weight: 700;
 	font-size: $font-size-s;
 	font-family: $main-font;
+	color: $color-ink;
+}
+
+.hangman-figure__letter.is-revealed {
+	border-bottom-color: $color-primary;
+}
+
+@media only screen and (min-width: $lg) and (min-height: 720px) {
+	.hangman-figure__letter {
+		width: 20px;
+		height: 28px;
+		font-size: $font-size-lg;
+		border-bottom-width: 4px;
+	}
 }

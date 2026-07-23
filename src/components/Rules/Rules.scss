@@ -1,29 +1,64 @@
-.rules-container {
+@import '../../assets/styles/variables';
+
+.rules {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
 	align-items: center;
-	font-size: $font-size-xs;
 	font-family: $main-font;
-	font-weight: 500;
-	padding: 14px;
-	border: 2.5px solid $color-black;
-	color: $color-black;
-	background-color: $color-white;
-	border-radius: 6px;
-	box-shadow: 6px 7px 0px -3px $color-black;
-	max-width: 300px;
+	color: $color-ink;
+	text-align: center;
 
-	ul {
-		padding: 0 24px;
+	h2 {
+		font-family: $display-font;
+		margin: 4px 0 2px;
 	}
 
-	li {
-		padding: 4px;
+	.rules__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background-color: $color-primary;
+		color: $color-surface;
+		font-size: 26px;
+		margin-bottom: 6px;
 	}
-}
 
-.modal-icon {
-	display: flex;
-	justify-content: center;
-	color: $color-blue;
+	.rules__intro {
+		font-size: $font-size-xs;
+		color: $color-muted;
+		margin: 0 0 14px;
+	}
+
+	.rules__list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		text-align: left;
+
+		li {
+			display: flex;
+			align-items: flex-start;
+			gap: 10px;
+			font-size: $font-size-xs;
+			line-height: 1.4;
+
+			svg {
+				flex-shrink: 0;
+				margin-top: 2px;
+				color: $color-primary;
+			}
+		}
+	}
+
+	.rules__footer {
+		font-size: $font-size-xs;
+		font-weight: 600;
+		margin-top: 16px;
+	}
 }
