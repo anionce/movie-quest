@@ -1,23 +1,37 @@
 // FONTS
 $main-font: 'Inter';
+$display-font: 'Poppins';
 
 // SCREEN SIZES
 $sm: 400px;
 $md: 750px;
 $lg: 1000px;
 
-// COLORS
-$color-white: #fff;
-$color-black: #000;
-$color-purple: #c7b9ff;
-$color-blue: #699bf7;
-$color-orange: #ff8577;
-$color-yellow: #ffc700;
-$color-green: #0fa958;
-$color-red: #fa0b0b;
+// BASE (pastel lavender theme)
+$color-bg: #efe9fb;
+$color-surface: #ffffff;
+$color-ink: #241f3d;
+$color-muted: rgba(36, 31, 61, 0.55);
+$color-border: rgba(36, 31, 61, 0.08);
+
+// ACCENTS (curated pastel palette)
+$color-primary: #8c7ae6;
+$color-primary-dark: #7566d6;
+$color-pink: #f6a8c9;
+$color-blue: #a9cbf2;
+$color-yellow: #f7d978;
+$color-green: #4fb783;
+$color-red: #ec6f68;
 
 // FONT SIZES
-$font-size-xs: 14px;
-$font-size-s: 16px;
-$font-size-md: 20px;
+$font-size-xs: 13px;
+$font-size-s: 15px;
+$font-size-md: 18px;
 $font-size-lg: 24px;
+$font-size-xl: 30px;
+
+// SHAPE
+$radius-chip: 999px;
+$radius-card: 22px;
+$shadow-sm: 0 4px 14px rgba(140, 122, 230, 0.18);
+$shadow-lg: 0 18px 42px rgba(140, 122, 230, 0.22);
