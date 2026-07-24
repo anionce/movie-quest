@@ -1,43 +1,42 @@
 import './Rules.scss';
 import MovieFilterIcon from '@mui/icons-material/MovieFilter';
-import TheatersIcon from '@mui/icons-material/Theaters';
-import KeyboardIcon from '@mui/icons-material/Keyboard';
-import SearchIcon from '@mui/icons-material/Search';
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 
 export const Rules = () => {
 	return (
-		<div className='rules'>
-			<div className='rules__icon'>
-				<MovieFilterIcon fontSize='inherit' />
-			</div>
-			<h2>How to play</h2>
-			<p className='rules__intro'>Guess the movie before you run out of clues!</p>
-			<ul className='rules__list'>
+		<>
+			<h2 className='rules-title'>How to play</h2>
+			<p className='rules-intro'>Guess the movie before you run out of hints!</p>
+			<ul className='rules-list'>
 				<li>
-					<TheatersIcon fontSize='small' />
-					<span>
-						Start with the <strong>genre</strong>, <strong>year</strong> and a few letters.
+					<span className='rules-step'>1</span>
+					<span className='rules-text'>
+						Start with 3 clues: the release <strong>year</strong>, the <strong>genre</strong>, and a few
+						letters of the title.
 					</span>
 				</li>
 				<li>
-					<KeyboardIcon fontSize='small' />
-					<span>
-						Type 3+ letters, pick your guess, hit <strong>Guess</strong>.
+					<span className='rules-step'>2</span>
+					<span className='rules-text'>
+						Type your guess, pick it from the list, then hit the green <strong>Guess</strong> button.
 					</span>
 				</li>
 				<li>
-					<SearchIcon fontSize='small' />
-					<span>
-						Stuck? <strong>Get hint</strong> reveals keywords, tagline or cast — each costs a point.
+					<span className='rules-step'>3</span>
+					<span className='rules-text'>
+						Stuck? Tap <strong>Get hint</strong> for keywords, the tagline, and a cast member — each hint
+						costs one point.
 					</span>
 				</li>
 				<li>
-					<SentimentDissatisfiedIcon fontSize='small' />
-					<span>Out of clues, the button turns red so you can see the answer.</span>
+					<span className='rules-step'>4</span>
+					<span className='rules-text'>
+						Out of hints? You can still reveal the answer. Your final score joins the leaderboard!
+					</span>
 				</li>
 			</ul>
-			<p className='rules__footer'>Good luck, have fun! 🍿</p>
-		</div>
+			<div className='modal-icon'>
+				<MovieFilterIcon />
+			</div>
+		</>
 	);
 };

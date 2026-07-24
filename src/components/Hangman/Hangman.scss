@@ -4,40 +4,45 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	align-items: flex-end;
-	row-gap: 16px;
-	column-gap: 28px;
-	max-width: 100%;
+	align-items: center;
+	align-content: center;
+	gap: 6px 16px;
+	padding: 14px 22px;
+	max-width: min(440px, 88vw);
+	max-height: 30vh;
+	overflow-y: auto;
+	background-color: $color-surface;
+	border-radius: $radius-card;
+	box-shadow: $shadow-sm;
 }
 
 .hangman-figure__word {
 	display: flex;
-	white-space: nowrap;
-	gap: 3px;
+	gap: 2px;
 }
 
-.hangman-figure__letter {
-	display: inline-flex;
-	align-items: flex-end;
-	justify-content: center;
-	width: 14px;
-	height: 20px;
+.hangman-letter {
+	display: inline-block;
+	min-width: 14px;
+	text-align: center;
+	font-weight: 800;
+	font-size: $font-size-md;
+	font-family: $display-font, $main-font, sans-serif;
+	color: $color-primary;
 	border-bottom: 3px solid $color-border;
-	font-weight: 700;
-	font-size: $font-size-s;
-	font-family: $main-font;
-	color: $color-ink;
+	line-height: 1.3;
 }
 
-.hangman-figure__letter.is-revealed {
+.hangman-letter.revealed {
 	border-bottom-color: $color-primary;
 }
 
-@media only screen and (min-width: $lg) and (min-height: 720px) {
-	.hangman-figure__letter {
-		width: 20px;
-		height: 28px;
-		font-size: $font-size-lg;
-		border-bottom-width: 4px;
+@media only screen and (max-width: $md) {
+	.hangman-figure {
+		padding: 10px 16px;
+	}
+
+	.hangman-letter {
+		font-size: $font-size-s;
 	}
 }

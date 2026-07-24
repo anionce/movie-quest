@@ -6,12 +6,15 @@ import {
 } from '../services/api/movieQuestApi';
 
 export const useGetMovieData = () => {
-	const [triggerPages, { data }] = useLazyGetRandomMoviesQuery();
-	const [triggerGetMovies, { data: movieData, isLoading: isLoadingMovieData }] = useLazyGetRandomMoviesQuery();
+	const [triggerPages, { data, isError: isPagesError }] = useLazyGetRandomMoviesQuery();
+	const [triggerGetMovies, { data: movieData, isLoading: isLoadingMovieData, isError: isMoviesError }] =
+		useLazyGetRandomMoviesQuery();
 	const [triggerGetMoreMovies] = useLazyGetRandomMoviesQuery();
-	const [triggerDetails, { data: movieDetails }] = useLazyGetDetailsQuery();
-	const [triggerKeywords, { data: movieKeywords }] = useLazyGetKeywordsQuery();
-	const [triggerCasting, { data: movieCast }] = useLazyGetCreditsQuery();
+	const [triggerDetails, { data: movieDetails, isError: isDetailsError }] = useLazyGetDetailsQuery();
+	const [triggerKeywords, { data: movieKeywords, isError: isKeywordsError }] = useLazyGetKeywordsQuery();
+	const [triggerCasting, { data: movieCast, isError: isCastError }] = useLazyGetCreditsQuery();
+
+	const isApiError = isPagesError || isMoviesError || isDetailsError || isKeywordsError || isCastError;
 
 	return {
 		data,
@@ -26,5 +29,6 @@ export const useGetMovieData = () => {
 		movieKeywords,
 		triggerCasting,
 		movieCast,
+		isApiError,
 	};
 };

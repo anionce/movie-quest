@@ -1,0 +1,89 @@
+@import '../../assets/styles/variables';
+
+.leaderboard-title {
+	text-align: center;
+	margin: 0 0 2px 0;
+	color: $color-primary;
+}
+
+.leaderboard-intro {
+	text-align: center;
+	font-weight: 600;
+	color: $color-ink;
+	margin: 0 0 4px 0;
+}
+
+.leaderboard-empty {
+	text-align: center;
+	color: $color-muted;
+	font-weight: 500;
+	margin: 12px 0;
+}
+
+.leaderboard-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 100%;
+}
+
+.leaderboard-item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 8px 10px;
+	background-color: $color-bg;
+	border-radius: 14px;
+}
+
+.leaderboard-rank {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	background-color: $color-primary;
+	color: $color-surface;
+	font-size: 11px;
+	font-weight: 800;
+}
+
+.leaderboard-details {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-width: 0;
+}
+
+.leaderboard-movie {
+	font-weight: 700;
+	color: $color-ink;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.leaderboard-date {
+	font-size: 11px;
+	color: $color-muted;
+}
+
+.leaderboard-score {
+	flex-shrink: 0;
+	font-weight: 800;
+	color: $color-primary;
+	font-size: $font-size-md;
+}
+
+.modal-icon {
+	display: flex;
+	justify-content: center;
+	color: $color-yellow;
+	margin-top: 10px;
+	font-size: 22px;
+}

@@ -1,63 +1,48 @@
-@import '../../assets/styles/variables';
+@import '../../assets/styles/variables.scss';
 
 .header-container {
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-	padding: 12px 20px 0;
-	flex-shrink: 0;
-}
-
-.header-side-link {
-	display: flex;
-	align-items: center;
 	justify-content: center;
-	width: 34px;
-	height: 34px;
-	color: $color-primary;
-
-	&--placeholder {
-		visibility: hidden;
-	}
+	align-items: center;
+	padding: 16px 0 4px 0;
 }
 
 .logo {
 	display: flex;
 	align-items: center;
-	gap: 6px;
-	font-family: $display-font;
-	font-size: $font-size-md;
-	font-weight: 500;
+	gap: 12px;
+	transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.logo:hover {
+	transform: scale(1.04);
+}
+
+.logo-badge {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	background: linear-gradient(155deg, $color-primary, $color-pink);
+	box-shadow: $shadow-sm;
+
+	svg {
+		font-size: 26px;
+		color: $color-surface;
+	}
+}
+
+.logo-text {
+	font-family: $display-font, $main-font, sans-serif;
+	font-size: 28px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
 	color: $color-ink;
 
-	strong {
-		font-weight: 700;
+	span {
 		color: $color-primary;
-	}
-}
-
-.logo-icon {
-	color: $color-primary;
-}
-
-@media only screen and (max-height: $md) {
-	.logo {
-		font-size: $font-size-s;
-	}
-}
-
-@media only screen and (min-width: $lg) and (min-height: 720px) {
-	.logo {
-		font-size: $font-size-xl;
-	}
-
-	.header-side-link {
-		width: 44px;
-		height: 44px;
-
-		svg {
-			font-size: 30px;
-		}
 	}
 }

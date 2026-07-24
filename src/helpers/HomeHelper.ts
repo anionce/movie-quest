@@ -29,5 +29,9 @@ export const getRandomActor = (movieCast: Credits) => {
 		.sort((a, b) => b.popularity - a.popularity)
 		.map((actor: { name: string }) => actor.name);
 
-	return actorsListByPopularity[2];
+	if (actorsListByPopularity.length === 0) return undefined;
+
+	// Skip the top-billed lead (too obvious a clue) but fall back to it for small casts.
+	const index = Math.min(2, actorsListByPopularity.length - 1);
+	return actorsListByPopularity[index];
 };

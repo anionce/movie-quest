@@ -5,26 +5,32 @@
 	width: 100%;
 	justify-content: space-between;
 	align-items: center;
+	gap: 8px;
 	font-weight: bold;
 	margin-bottom: 12px;
-	flex-shrink: 0;
 }
 
 .game-footer-clues {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 4px;
-	font-size: $font-size-md;
+	gap: 6px;
+	font-size: $font-size-s;
+	font-weight: 800;
 	color: $color-ink;
+	background-color: $color-surface;
+	padding: 10px 16px;
+	border-radius: $radius-chip;
+	box-shadow: $shadow-sm;
+	transition: color 0.15s ease;
 }
 
 .game-error {
 	color: $color-red;
 }
 
-@media only screen and (max-height: $md) {
+@media only screen and (max-width: $md) {
 	.game-footer-container {
-		width: 100%;
+		width: min(340px, calc(100vw - 24px));
 	}
 }

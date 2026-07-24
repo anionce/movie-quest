@@ -2,44 +2,23 @@
 
 .more-button {
 	font-size: $font-size-xs;
-	width: 150px;
-	margin: 8px 0;
-	background-color: $color-primary;
-	color: $color-surface;
-	flex-shrink: 0;
+	width: 160px;
 }
 
 .lost-button {
 	font-size: $font-size-xs;
-	width: auto;
-	padding: 10px 20px;
+	width: 180px;
 	background-color: $color-red;
-	color: $color-surface;
-	margin: 8px 0;
-	flex-shrink: 0;
-	animation: pulse-attention 1.4s ease-in-out infinite;
 }
 
 .check-result {
-	display: flex;
-	align-items: center;
-	gap: 8px;
 	font-size: $font-size-s;
-}
-
-@keyframes pulse-attention {
-	0%,
-	100% {
-		box-shadow: $shadow-sm;
-	}
-	50% {
-		box-shadow: 0 4px 18px rgba(236, 111, 104, 0.55);
-	}
 }
 
 .get-hint {
 	display: flex;
 	align-items: center;
+	gap: 6px;
 
 	span {
 		font-size: $font-size-s;

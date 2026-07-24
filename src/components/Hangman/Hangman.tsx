@@ -14,20 +14,17 @@ export const Hangman = ({ value, revealedLetters }: HangmanProps) => {
 		<div className='hangman-figure'>
 			{words.map((word, wordIndex) => (
 				<div key={wordIndex} className='hangman-figure__word'>
-					{word.split('').map((char, charIndex) => {
-						if (invalidCharacters.includes(char)) {
-							return null;
-						}
-						const isRevealed = revealedLetters.includes(char);
-						return (
-							<span
-								key={charIndex}
-								className={isRevealed ? 'hangman-figure__letter is-revealed' : 'hangman-figure__letter'}
-							>
-								{isRevealed ? char : ' '}
-							</span>
-						);
-					})}
+					{word
+						.split('')
+						.filter(char => !invalidCharacters.includes(char))
+						.map((char, charIndex) => {
+							const isRevealed = revealedLetters.includes(char);
+							return (
+								<span key={charIndex} className={isRevealed ? 'hangman-letter revealed' : 'hangman-letter'}>
+									{isRevealed ? char : ' '}
+								</span>
+							);
+						})}
 				</div>
 			))}
 		</div>

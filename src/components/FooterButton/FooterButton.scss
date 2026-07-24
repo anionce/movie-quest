@@ -1,19 +1,24 @@
 @import '../../assets/styles/variables.scss';
 
-.button-help {
-	background-color: $color-yellow;
-	width: 40px;
+.button-help,
+.button-reset,
+.button-home,
+.button-leaderboard {
+	width: 44px;
+	height: 44px;
 	padding: 0;
+	background-color: $color-surface;
+	color: $color-primary;
+	border: 2px solid $color-border;
+	border-radius: 50%;
+	box-shadow: $shadow-sm;
 }
 
-.button-reset {
-	background-color: $color-green;
-	color: $color-surface;
-	width: 40px;
-	padding: 0;
-}
-
-.button-home {
-	background-color: $color-primary;
-	color: $color-surface;
+.button-help:hover:not(:disabled),
+.button-reset:hover:not(:disabled),
+.button-home:hover:not(:disabled),
+.button-leaderboard:hover:not(:disabled) {
+	filter: none;
+	background-color: $color-surface;
+	border-color: $color-primary;
 }

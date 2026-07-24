@@ -1,64 +1,73 @@
 @import '../../assets/styles/variables';
 
-.rules {
+.rules-title {
+	text-align: center;
+	margin: 0 0 2px 0;
+	color: $color-primary;
+}
+
+.rules-intro {
+	text-align: center;
+	font-weight: 600;
+	color: $color-ink;
+	margin: 0 0 4px 0;
+}
+
+.rules-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	font-family: $main-font;
-	color: $color-ink;
-	text-align: center;
+	gap: 12px;
 
-	h2 {
-		font-family: $display-font;
-		margin: 4px 0 2px;
-	}
-
-	.rules__icon {
+	li {
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 48px;
-		height: 48px;
-		border-radius: 50%;
-		background-color: $color-primary;
-		color: $color-surface;
-		font-size: 26px;
-		margin-bottom: 6px;
-	}
-
-	.rules__intro {
-		font-size: $font-size-xs;
-		color: $color-muted;
-		margin: 0 0 14px;
-	}
-
-	.rules__list {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
+		align-items: flex-start;
 		gap: 12px;
-		text-align: left;
-
-		li {
-			display: flex;
-			align-items: flex-start;
-			gap: 10px;
-			font-size: $font-size-xs;
-			line-height: 1.4;
-
-			svg {
-				flex-shrink: 0;
-				margin-top: 2px;
-				color: $color-primary;
-			}
-		}
+		padding: 0;
+		color: $color-ink;
+		line-height: 1.4;
 	}
+}
 
-	.rules__footer {
-		font-size: $font-size-xs;
-		font-weight: 600;
-		margin-top: 16px;
-	}
+.rules-text {
+	flex: 1;
+	min-width: 0;
+}
+
+.rules-step {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background-color: $color-yellow;
+	color: $color-ink;
+	font-size: 12px;
+	font-weight: 800;
+	line-height: 1;
+}
+
+.rules-list li:nth-child(2) .rules-step {
+	background-color: $color-blue;
+}
+
+.rules-list li:nth-child(3) .rules-step {
+	background-color: $color-pink;
+}
+
+.rules-list li:nth-child(4) .rules-step {
+	background-color: $color-primary;
+	color: $color-surface;
+}
+
+.modal-icon {
+	display: flex;
+	justify-content: center;
+	color: $color-primary;
+	margin-top: 8px;
+	font-size: 22px;
 }

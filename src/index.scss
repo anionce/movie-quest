@@ -1,19 +1,7 @@
 @import '/src/assets/styles/variables.scss';
 
-* {
-	box-sizing: border-box;
-}
-
-html,
-body,
-#root {
-	height: 100%;
-	overflow: hidden;
-}
-
 :root {
-	font-family: 'Inter', 'Oxygen', 'Roboto', 'Segoe UI', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-		'Helvetica Neue', sans-serif;
+	font-family: $main-font, 'Helvetica Neue', Arial, sans-serif;
 	font-weight: 400;
 
 	color-scheme: light;
@@ -28,7 +16,7 @@ body,
 }
 
 a {
-	font-weight: 600;
+	font-weight: 500;
 	color: $color-primary;
 	text-decoration: inherit;
 }
@@ -41,8 +29,17 @@ body {
 	font-family: $main-font;
 	display: flex;
 	justify-content: center;
-	margin: 0;
-	height: 100%;
+	margin: 2px;
+	height: calc(100vh - 4px);
+	overflow: hidden;
+}
+
+h1,
+h2,
+h3 {
+	font-family: $display-font, $main-font, sans-serif;
+	font-weight: 700;
+	color: $color-ink;
 }
 
 button {
@@ -50,46 +47,63 @@ button {
 	justify-content: center;
 	align-items: center;
 	font-size: $font-size-md;
-	font-family: $main-font;
-	font-weight: 700;
-	height: 40px;
-	padding: 10px 18px;
+	font-family: $display-font, $main-font, sans-serif;
+	font-weight: 600;
+	height: 32px;
+	padding: 14px 22px;
 	border: none;
-	color: $color-ink;
-	background-color: $color-surface;
+	color: $color-surface;
+	background-color: $color-primary;
 	border-radius: $radius-chip;
 	box-shadow: $shadow-sm;
 	cursor: pointer;
-	transition: box-shadow 0.15s ease;
+	transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease, filter 0.15s ease;
 }
 
-button:hover {
+button:hover:not(:disabled):not(.button-disabled) {
+	filter: brightness(1.06);
+	transform: translateY(-2px);
 	box-shadow: $shadow-lg;
 }
 
-button:disabled {
-	box-shadow: $shadow-sm;
-	pointer-events: none;
+button:active:not(:disabled):not(.button-disabled) {
+	transform: scale(0.94);
 }
 
-@media only screen and (max-height: $md) {
+button:focus-visible {
+	outline: 2.5px solid $color-primary-dark;
+	outline-offset: 3px;
+}
+
+button:disabled,
+button.button-disabled {
+	cursor: not-allowed;
+	opacity: 0.4;
+}
+
+@media only screen and (max-width: $md) {
 	button {
 		font-size: $font-size-xs;
-		height: 34px;
 	}
 }
 
-@media only screen and (max-height: $md) {
-	body {
-		display: flex;
-		justify-content: center;
+@keyframes pop-in {
+	from {
+		opacity: 0;
+		transform: scale(0.92) translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1) translateY(0);
 	}
 }
 
-@media only screen and (min-width: $lg) and (min-height: 720px) {
-	button {
-		font-size: $font-size-lg;
-		height: 52px;
-		padding: 12px 24px;
+@keyframes pulse {
+	0%,
+	100% {
+		opacity: 0.5;
+	}
+	50% {
+		opacity: 1;
 	}
 }

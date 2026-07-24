@@ -1,58 +1,62 @@
 @import '../../assets/styles/variables.scss';
 
-button[class^='button-'] {
-	border-radius: $radius-chip;
-	font-weight: 600;
+.clue-button {
+	font-weight: 700;
+	color: $color-ink;
+	cursor: default;
+}
+
+.clue-button:hover,
+.clue-button:active {
+	transform: none;
+	filter: none;
+	box-shadow: none;
 }
 
 .button-year {
-	background-color: $color-primary;
-	color: $color-surface;
+	background-color: $color-yellow;
 }
 
 .button-genre {
-	background-color: $color-yellow;
+	background-color: $color-pink;
 	height: fit-content;
 	padding: 8px 16px;
 }
 
 .button-tag-1 {
-	background-color: $color-green;
-	color: $color-surface;
+	background-color: $color-blue;
 }
 
 .button-tag-2 {
-	background-color: $color-surface;
-	border: 1.5px solid $color-border;
+	background-color: $color-yellow;
 }
 
 .button-tag-3 {
+	background-color: $color-pink;
+}
+
+.button-tagline {
+	background-color: $color-surface;
+	border: 2px solid $color-border;
+	color: $color-ink;
+	font-style: italic;
+	font-weight: 600;
+	box-shadow: none;
+	height: fit-content;
+	padding: 10px 18px;
+	max-width: min(420px, 88vw);
+}
+
+.button-actor {
 	background-color: $color-primary;
 	color: $color-surface;
 }
 
-.button-tagline {
-	background-color: $color-blue;
-	font-size: $font-size-xs;
-	height: fit-content;
-	padding: 8px 16px;
-	text-align: center;
-}
-
-.button-actor {
-	background-color: $color-pink;
-	margin-bottom: 4px;
-}
-
 .button-result {
 	height: fit-content;
-	background-color: $color-surface;
-	border: 1.5px solid $color-border;
-	font-family: $display-font;
-}
-
-@media only screen and (min-width: $lg) and (min-height: 720px) {
-	.button-tagline {
-		font-size: $font-size-md;
-	}
+	background-color: transparent;
+	box-shadow: none;
+	padding: 0;
+	color: $color-ink;
+	font-size: $font-size-lg;
 }

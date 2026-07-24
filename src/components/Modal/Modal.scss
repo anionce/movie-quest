@@ -1,4 +1,4 @@
-@import '../../assets/styles/variables';
+@import '../../assets/styles/variables.scss';
 
 .modal-wrapper {
 	position: fixed;
@@ -13,34 +13,43 @@
 	z-index: 999;
 }
 
+.modal-content {
+	position: relative;
+	max-height: 88vh;
+}
+
 .close-button {
 	position: absolute;
 	top: -14px;
 	right: -14px;
-	width: 32px;
-	height: 32px;
+	width: 34px;
+	height: 34px;
 	padding: 0;
-	cursor: pointer;
 	font-size: 16px;
 	background-color: $color-surface;
 	color: $color-ink;
+	border: 2px solid $color-border;
+	border-radius: 50%;
 	box-shadow: $shadow-sm;
 }
 
 .modal-container {
-	position: relative;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	gap: 10px;
 	font-size: $font-size-xs;
 	font-family: $main-font;
 	font-weight: 500;
-	padding: 22px;
+	padding: 28px 24px;
+	border: none;
 	color: $color-ink;
 	background-color: $color-surface;
 	border-radius: $radius-card;
 	box-shadow: $shadow-lg;
-	max-width: 320px;
-	max-height: min(80vh, 520px);
+	max-width: min(340px, 85vw);
+	max-height: 86vh;
 	overflow-y: auto;
+	animation: pop-in 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }

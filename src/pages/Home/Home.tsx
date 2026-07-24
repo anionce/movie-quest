@@ -9,11 +9,19 @@ import { MoreButton } from '../../components/MoreButton/MoreButton';
 import { Hangman } from '../../components/Hangman/Hangman';
 import { useNavigate } from 'react-router-dom';
 import { GameFooter } from '../../components/GameFooter/GameFooter';
-import { decreaseClues, resetClues, selectCluesLeft, setClues, setMovie } from '../../services/slices/scoreboardSlice';
+import {
+	decreaseClues,
+	resetClues,
+	selectCluesLeft,
+	setClues,
+	setMovie,
+	setMoviePoster,
+} from '../../services/slices/scoreboardSlice';
 import { useAppDispatch } from '../../store';
 import { Loader } from '../../components/Loader/Loader';
 import { useGetMovieData } from '../../hooks/useGetMovieData';
 import { Rules } from '../../components/Rules/Rules';
+import { Leaderboard } from '../../components/Leaderboard/Leaderboard';
 import { Modal } from '../../components/Modal/Modal';
 import { useSelector } from 'react-redux';
 
@@ -33,6 +41,7 @@ export const Home = () => {
 		movieKeywords,
 		triggerCasting,
 		movieCast,
+		isApiError,
 	} = useGetMovieData();
 
 	const [shouldRefresh, setShouldRefresh] = useState(false);
@@ -48,6 +57,7 @@ export const Home = () => {
 		actor: false,
 	});
 	const [showModal, setShowModal] = useState(false);
+	const [showLeaderboard, setShowLeaderboard] = useState(false);
 	const [lettersToReveal, setLettersToReveal] = useState<number>(0);
 	const [additionalClues, setAdditionalClues] = useState<number>(0);
 	const [revealedLetters, setRevealedLetters] = useState<string[]>([]);
@@ -72,6 +82,7 @@ export const Home = () => {
 	const refreshPage = () => {
 		setShouldRefresh(false);
 		dispatch(resetClues());
+		dispatch(setMoviePoster(undefined));
 		setMovieClues(undefined);
 		setTotalPages(undefined);
 		setMovieToGuess(undefined);
@@ -128,7 +139,8 @@ export const Home = () => {
 
 		const titleArray = results
 			.map(result => result?.data?.results.map((movie: Movie) => movie.title))
-			.flat() as string[];
+			.flat()
+			.filter((title): title is string => Boolean(title));
 
 		const newArray = titleArray.filter(title => !searchableResults.includes(title));
 
@@ -154,6 +166,10 @@ export const Home = () => {
 		setShowModal(!showModal);
 	};
 
+	const toggleLeaderboard = () => {
+		setShowLeaderboard(!showLeaderboard);
+	};
+
 	useEffect(() => {
 		triggerPages({ page: 11 });
 	}, []);
@@ -174,7 +190,7 @@ export const Home = () => {
 			const movieToGuess = movieData.results[randomElement];
 			setMovieToGuess(movieToGuess);
 
-			const titleArray = movieData.results.map((movie: Movie) => movie.title);
+			const titleArray = movieData.results.map((movie: Movie) => movie.title).filter(Boolean);
 			setSearchableResults(titleArray);
 		}
 	}, [movieData]);
@@ -199,7 +215,7 @@ export const Home = () => {
 				year: movieToGuess.release_date.substring(0, 4),
 				genres: undefined,
 			});
-			dispatch(setMovie({ title: movieToGuess.title, posterPath: movieToGuess.poster_path }));
+			dispatch(setMovie(movieToGuess.title));
 		}
 	}, [movieToGuess]);
 
@@ -212,6 +228,7 @@ export const Home = () => {
 				year: prev?.year,
 				genres: getTruncatedGenre(curatedGenres),
 			}));
+			dispatch(setMoviePoster(movieDetails.poster_path));
 		}
 	}, [movieDetails]);
 
@@ -231,7 +248,7 @@ export const Home = () => {
 	useEffect(() => {
 		let timeoutId: NodeJS.Timeout;
 
-		if (isLoading) {
+		if (isLoading && !isApiError) {
 			timeoutId = setTimeout(() => {
 				setShouldRefresh(true);
 			}, 3000);
@@ -240,7 +257,7 @@ export const Home = () => {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [isLoading]);
+	}, [isLoading, isApiError]);
 
 	useEffect(() => {
 		if (shouldRefresh) {
@@ -248,24 +265,24 @@ export const Home = () => {
 		}
 	}, [shouldRefresh]);
 
+	useEffect(() => {
+		if (isApiError) {
+			navigate('/error');
+		}
+	}, [isApiError]);
+
 	const revealLettersBasedOnClue = () => {
-		if (movieToGuess?.title.toLowerCase().includes('a') && !revealedLetters.includes('a')) {
-			revealLetter('A'.toLowerCase());
-			revealLetter('a'.toUpperCase());
+		if (!movieToGuess) return;
+
+		const title = movieToGuess.title.toLowerCase();
+		const nextLetter = availableClueLetter.find(
+			letter => title.includes(letter) && !revealedLetters.includes(letter)
+		);
+
+		if (nextLetter) {
+			revealLetter(nextLetter.toLowerCase());
+			revealLetter(nextLetter.toUpperCase());
 			setLettersToReveal(prev => prev - 1);
-			return;
-		}
-		if (movieToGuess?.title.toLowerCase().includes('e') && !revealedLetters.includes('e')) {
-			revealLetter('E'.toLowerCase());
-			revealLetter('e'.toUpperCase());
-			setLettersToReveal(prev => prev - 1);
-			return;
-		}
-		if (movieToGuess?.title.toLowerCase().includes('m') && !revealedLetters.includes('m')) {
-			revealLetter('M'.toLowerCase());
-			revealLetter('m'.toUpperCase());
-			setLettersToReveal(prev => prev - 1);
-			return;
 		}
 	};
 
@@ -289,6 +306,7 @@ export const Home = () => {
 								searchableResults={searchableResults}
 								guessMovie={guessMovie}
 								setGameError={setGameError}
+								gameError={gameError}
 							/>
 						)}
 						{shouldShowFirstClues && (
@@ -300,41 +318,50 @@ export const Home = () => {
 								<Hangman value={movieToGuess.title} revealedLetters={revealedLetters} />
 							</div>
 						)}
-						{(shouldShowKeywords || shouldShowTagline || shouldShowActor) && (
-							<div className='extra-clues-container'>
-								{shouldShowKeywords && (
-									<div className='keywords-container'>
-										<span className='clue-title'>Keywords:</span>
-										<div className='keywords'>
-											{movieClues.tags?.map((tag, index) => (
-												<ClueButton key={index} value={tag} type={`tag-${index + 1}`} />
-											))}
-										</div>
+						<div className='extra-clues-scroll'>
+							{shouldShowKeywords && (
+								<div className='keywords-container'>
+									<span className='clue-title'>Keywords:</span>
+									<div className='keywords'>
+										{movieClues.tags?.map((tag, index) => (
+											<ClueButton key={index} value={tag} type={`tag-${index + 1}`} />
+										))}
 									</div>
-								)}
-								{shouldShowTagline && (
-									<div className='tagline-container'>
-										<span className='clue-title'>Tagline:</span>
-										<ClueButton value={movieClues.tagline} type='tagline' />
-									</div>
-								)}
-								{shouldShowActor && (
-									<div className='actor-container'>
-										<span className='clue-title'>Actor:</span>
-										<ClueButton value={movieClues.actor} type='actor' />
-									</div>
-								)}
-							</div>
-						)}
+								</div>
+							)}
+							{shouldShowTagline && (
+								<div className='tagline-container'>
+									<span className='clue-title'>Tagline:</span>
+									<ClueButton value={movieClues.tagline} type='tagline' />
+								</div>
+							)}
+							{shouldShowActor && (
+								<div className='actor-container'>
+									<span className='clue-title'>Actor:</span>
+									<ClueButton value={movieClues.actor} type='actor' />
+								</div>
+							)}
+						</div>
 					</div>
 					<MoreButton getMoreClues={getMoreClues} gameFinished={isGameFinished} />
-					<GameFooter refreshPage={refreshPage} error={gameError} toggleModal={toggleModal} />
+					<GameFooter
+						refreshPage={refreshPage}
+						error={gameError}
+						toggleModal={toggleModal}
+						toggleLeaderboard={toggleLeaderboard}
+					/>
 				</>
 			)}
 
 			{showModal && (
 				<Modal toggleModal={toggleModal}>
 					<Rules />
+				</Modal>
+			)}
+
+			{showLeaderboard && (
+				<Modal toggleModal={toggleLeaderboard}>
+					<Leaderboard />
 				</Modal>
 			)}
 		</div>

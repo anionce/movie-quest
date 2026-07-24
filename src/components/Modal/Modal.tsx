@@ -10,11 +10,13 @@ export type ModalProps = {
 export const Modal = ({ children, toggleModal }: ModalProps) => {
 	return (
 		<div className='modal-wrapper' onClick={toggleModal}>
-			<div className='modal-container' onClick={e => e.stopPropagation()}>
-				<button className='close-button' onClick={toggleModal}>
-					<ClearIcon fontSize='small' />
+			<div className='modal-content' onClick={event => event.stopPropagation()}>
+				<button className='close-button' onClick={toggleModal} aria-label='Close'>
+					<ClearIcon />
 				</button>
-				<div>{children}</div>
+				<div className='modal-container'>
+					<div>{children}</div>
+				</div>
 			</div>
 		</div>
 	);

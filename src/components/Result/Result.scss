@@ -19,10 +19,88 @@
 	box-shadow: $shadow-lg;
 }
 
-span {
+.result-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 28px 28px 32px;
+	max-width: min(300px, 85vw);
+	max-height: 80vh;
+	overflow-y: auto;
+	background-color: $color-surface;
+	border: none;
+	border-radius: $radius-card;
+	box-shadow: $shadow-lg;
+	animation: pop-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.result-poster {
+	width: 140px;
+	height: 210px;
+	object-fit: cover;
+	border-radius: 16px;
+	margin-bottom: 8px;
+	box-shadow: $shadow-sm;
+}
+
+.result-icon-badge {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	margin-bottom: 8px;
+
+	svg {
+		font-size: 36px;
+	}
+}
+
+.result-card-win .result-icon-badge {
+	background-color: rgba($color-green, 0.14);
+}
+
+.result-card-lose .result-icon-badge {
+	background-color: rgba($color-red, 0.12);
+}
+
+.result-label {
+	font-family: $main-font;
+	font-size: $font-size-xs;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: $color-muted;
+}
+
+.result-title {
+	font-family: $display-font, $main-font, sans-serif;
+	font-size: $font-size-xl;
+	font-weight: 700;
+	text-align: center;
+	margin: 0;
+	color: $color-primary;
+}
+
+.result-score-row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.result-score {
 	font-family: $main-font;
 	font-size: $font-size-md;
-	font-weight: bold;
+	font-weight: 700;
+	color: $color-ink;
+}
+
+.result-score-icon {
+	font-size: 18px;
+	color: $color-muted;
 }
 
 .correct {
