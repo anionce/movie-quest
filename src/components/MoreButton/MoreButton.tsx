@@ -18,7 +18,7 @@ export const MoreButton = ({ getMoreClues, gameFinished }: MoreButtonProps) => {
 			{gameFinished ? (
 				<div className='check-result'>
 					<SentimentDissatisfiedIcon fontSize='small' />
-					<span>No hints left — see result</span>
+					<span>See result</span>
 				</div>
 			) : (
 				<div className='get-hint'>

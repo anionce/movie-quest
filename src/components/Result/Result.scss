@@ -11,14 +11,6 @@
 	padding: 8px 0;
 }
 
-.result-poster {
-	width: 160px;
-	max-height: 40vh;
-	object-fit: cover;
-	border-radius: $radius-card;
-	box-shadow: $shadow-lg;
-}
-
 .result-card {
 	display: flex;
 	flex-direction: column;
@@ -88,7 +80,7 @@
 .result-score-row {
 	display: flex;
 	align-items: center;
-	gap: 6px;
+	gap: 8px;
 }
 
 .result-score {
@@ -96,11 +88,13 @@
 	font-size: $font-size-md;
 	font-weight: 700;
 	color: $color-ink;
+	line-height: 1;
 }
 
 .result-score-icon {
-	font-size: 18px;
+	font-size: 22px;
 	color: $color-muted;
+	display: flex;
 }
 
 .correct {

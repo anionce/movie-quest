@@ -7,12 +7,18 @@
 
 .lost-button {
 	font-size: $font-size-xs;
-	width: 180px;
+	width: 160px;
 	background-color: $color-red;
 }
 
 .check-result {
-	font-size: $font-size-s;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+
+	span {
+		font-size: $font-size-s;
+	}
 }
 
 .get-hint {
