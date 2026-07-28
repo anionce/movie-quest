@@ -6,6 +6,7 @@ import { FooterButton } from '../FooterButton/FooterButton';
 import { useSelector } from 'react-redux';
 import { selectCluesLeft } from '../../services/slices/scoreboardSlice';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
+import { useTranslation } from 'react-i18next';
 
 export type GameFooterProps = {
 	refreshPage: () => void;
@@ -15,6 +16,7 @@ export type GameFooterProps = {
 };
 
 export const GameFooter = ({ refreshPage, error, toggleModal, toggleLeaderboard }: GameFooterProps) => {
+	const { t } = useTranslation();
 	const cluesLeft = useSelector(selectCluesLeft);
 
 	const shouldShowGameError = error || cluesLeft === 0;
@@ -23,18 +25,18 @@ export const GameFooter = ({ refreshPage, error, toggleModal, toggleLeaderboard 
 
 	return (
 		<div className='game-footer-container'>
-			<FooterButton value={<HelpOutlineIcon />} type='help' action={toggleModal} label='View rules' />
+			<FooterButton value={<HelpOutlineIcon />} type='help' action={toggleModal} label={t('buttons.viewRules')} />
 			<FooterButton
 				value={<EmojiEventsOutlinedIcon />}
 				type='leaderboard'
 				action={toggleLeaderboard}
-				label='View leaderboard'
+				label={t('buttons.viewLeaderboard')}
 			/>
 			<div className={getClass}>
 				{cluesLeft}
 				<LightbulbOutlinedIcon />
 			</div>
-			<FooterButton value={<LoopIcon />} type='reset' action={refreshPage} label='Restart game' />
+			<FooterButton value={<LoopIcon />} type='reset' action={refreshPage} label={t('buttons.restartGame')} />
 		</div>
 	);
 };

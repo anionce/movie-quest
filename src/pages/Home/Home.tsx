@@ -1,6 +1,6 @@
 import { Dispatch, useEffect, useState } from 'react';
 import './Home.scss';
-import { getRandomActor, getRandomValue, getTruncatedGenre } from '../../helpers/HomeHelper';
+import { getLocalizedPoster, getRandomActor, getRandomValue, getTruncatedGenre } from '../../helpers/HomeHelper';
 import { GenreDetail, Movie } from '../../models/MovieResponse';
 import { ClueButton } from '../../components/ClueButton/ClueButton';
 import { ExtraClues, MovieClues, availableClueLetter } from '../../constants/MovieClues';
@@ -18,6 +18,7 @@ import {
 	setMoviePoster,
 } from '../../services/slices/scoreboardSlice';
 import { useAppDispatch } from '../../store';
+import { useTranslation } from 'react-i18next';
 import { Loader } from '../../components/Loader/Loader';
 import { useGetMovieData } from '../../hooks/useGetMovieData';
 import { Rules } from '../../components/Rules/Rules';
@@ -26,6 +27,7 @@ import { Modal } from '../../components/Modal/Modal';
 import { useSelector } from 'react-redux';
 
 export const Home = () => {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const dispatch: Dispatch<any> = useAppDispatch();
 	const {
@@ -37,10 +39,10 @@ export const Home = () => {
 		triggerGetMoreMovies,
 		triggerDetails,
 		movieDetails,
-		triggerKeywords,
-		movieKeywords,
 		triggerCasting,
 		movieCast,
+		triggerImages,
+		movieImages,
 		isApiError,
 	} = useGetMovieData();
 
@@ -52,7 +54,6 @@ export const Home = () => {
 
 	const [gameError, setGameError] = useState<boolean>(false);
 	const [toggleClues, setToggleClues] = useState<ExtraClues>({
-		keywords: false,
 		tagline: false,
 		actor: false,
 	});
@@ -65,15 +66,9 @@ export const Home = () => {
 	const cluesLeft = useSelector(selectCluesLeft);
 
 	const shouldShowFirstClues =
-		movieToGuess?.title &&
-		movieClues?.genres &&
-		movieClues?.year &&
-		movieDetails?.tagline &&
-		movieKeywords &&
-		movieCast;
+		movieToGuess?.title && movieClues?.genres && movieClues?.year && movieDetails?.tagline && movieCast;
 	const isLoading = isLoadingMovieData || !shouldShowFirstClues;
 	const shouldShowInput = shouldShowFirstClues;
-	const shouldShowKeywords = movieClues?.tags && toggleClues.keywords;
 	const shouldShowTagline = movieClues?.tagline && toggleClues.tagline;
 	const shouldShowActor = movieClues?.actor && toggleClues.actor;
 
@@ -91,7 +86,6 @@ export const Home = () => {
 		setRevealedLetters([]);
 		setAdditionalClues(0);
 		setToggleClues({
-			keywords: false,
 			tagline: false,
 			actor: false,
 		});
@@ -106,10 +100,7 @@ export const Home = () => {
 		if (lettersToReveal) {
 			revealLettersBasedOnClue();
 		} else {
-			if (!toggleClues.keywords) {
-				return setToggleClues(prev => ({ ...prev, keywords: true }));
-			}
-			if (toggleClues.keywords && !toggleClues.tagline) {
+			if (!toggleClues.tagline) {
 				return setToggleClues(prev => ({ ...prev, tagline: true }));
 			}
 			if (toggleClues.tagline && !toggleClues.actor) {
@@ -209,8 +200,8 @@ export const Home = () => {
 		if (movieToGuess) {
 			updateNeededClues(movieToGuess.title);
 			triggerDetails({ id: movieToGuess.id });
-			triggerKeywords({ id: movieToGuess.id });
 			triggerCasting({ id: movieToGuess.id });
+			triggerImages({ id: movieToGuess.id });
 			setMovieClues({
 				year: movieToGuess.release_date.substring(0, 4),
 				genres: undefined,
@@ -228,22 +219,26 @@ export const Home = () => {
 				year: prev?.year,
 				genres: getTruncatedGenre(curatedGenres),
 			}));
-			dispatch(setMoviePoster(movieDetails.poster_path));
 		}
 	}, [movieDetails]);
 
 	useEffect(() => {
-		if (movieDetails?.tagline && movieKeywords && movieCast) {
+		if (movieDetails) {
+			dispatch(setMoviePoster(getLocalizedPoster(movieImages, movieDetails.poster_path)));
+		}
+	}, [movieDetails, movieImages]);
+
+	useEffect(() => {
+		if (movieDetails?.tagline && movieCast) {
 			setMovieClues(prev => ({
 				...prev,
 				tagline: movieDetails.tagline,
-				tags: movieKeywords.keywords.map((keyword: { name: string }) => keyword.name).slice(0, 3),
 				actor: getRandomActor(movieCast),
 			}));
-		} else if (!movieDetails?.tagline || !movieKeywords) {
+		} else if (!movieDetails?.tagline) {
 			setShouldRefresh(true);
 		}
-	}, [movieDetails, movieKeywords, movieCast]);
+	}, [movieDetails, movieCast]);
 
 	useEffect(() => {
 		let timeoutId: NodeJS.Timeout;
@@ -319,25 +314,15 @@ export const Home = () => {
 							</div>
 						)}
 						<div className='extra-clues-scroll'>
-							{shouldShowKeywords && (
-								<div className='keywords-container'>
-									<span className='clue-title'>Keywords:</span>
-									<div className='keywords'>
-										{movieClues.tags?.map((tag, index) => (
-											<ClueButton key={index} value={tag} type={`tag-${index + 1}`} />
-										))}
-									</div>
-								</div>
-							)}
 							{shouldShowTagline && (
 								<div className='tagline-container'>
-									<span className='clue-title'>Tagline:</span>
+									<span className='clue-title'>{t('clues.tagline')}</span>
 									<ClueButton value={movieClues.tagline} type='tagline' />
 								</div>
 							)}
 							{shouldShowActor && (
 								<div className='actor-container'>
-									<span className='clue-title'>Actor:</span>
+									<span className='clue-title'>{t('clues.cast')}</span>
 									<ClueButton value={movieClues.actor} type='actor' />
 								</div>
 							)}

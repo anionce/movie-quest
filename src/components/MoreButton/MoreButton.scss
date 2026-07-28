@@ -2,12 +2,14 @@
 
 .more-button {
 	font-size: $font-size-xs;
-	width: 160px;
+	min-width: 160px;
+	white-space: nowrap;
 }
 
 .lost-button {
 	font-size: $font-size-xs;
-	width: 160px;
+	min-width: 160px;
+	white-space: nowrap;
 	background-color: $color-red;
 }
 
@@ -15,9 +17,11 @@
 	display: flex;
 	align-items: center;
 	gap: 6px;
+	white-space: nowrap;
 
 	span {
 		font-size: $font-size-s;
+		white-space: nowrap;
 	}
 }
 
@@ -25,8 +29,10 @@
 	display: flex;
 	align-items: center;
 	gap: 6px;
+	white-space: nowrap;
 
 	span {
 		font-size: $font-size-s;
+		white-space: nowrap;
 	}
 }

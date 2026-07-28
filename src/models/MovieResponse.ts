@@ -56,9 +56,15 @@ export type MovieDetail = Movie & {
 
 export type GenreDetail = { id: number; name: string };
 
-export type Keywords = {
+export type ImagePoster = {
+	file_path: string;
+	iso_639_1: string | null;
+	vote_average: number;
+};
+
+export type Images = {
 	id: number;
-	keywords: { id: number; name: string }[];
+	posters: ImagePoster[];
 };
 
 export type Credits = {

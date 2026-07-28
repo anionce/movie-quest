@@ -1,8 +1,8 @@
 import {
 	useLazyGetRandomMoviesQuery,
 	useLazyGetDetailsQuery,
-	useLazyGetKeywordsQuery,
 	useLazyGetCreditsQuery,
+	useLazyGetImagesQuery,
 } from '../services/api/movieQuestApi';
 
 export const useGetMovieData = () => {
@@ -11,10 +11,10 @@ export const useGetMovieData = () => {
 		useLazyGetRandomMoviesQuery();
 	const [triggerGetMoreMovies] = useLazyGetRandomMoviesQuery();
 	const [triggerDetails, { data: movieDetails, isError: isDetailsError }] = useLazyGetDetailsQuery();
-	const [triggerKeywords, { data: movieKeywords, isError: isKeywordsError }] = useLazyGetKeywordsQuery();
 	const [triggerCasting, { data: movieCast, isError: isCastError }] = useLazyGetCreditsQuery();
+	const [triggerImages, { data: movieImages }] = useLazyGetImagesQuery();
 
-	const isApiError = isPagesError || isMoviesError || isDetailsError || isKeywordsError || isCastError;
+	const isApiError = isPagesError || isMoviesError || isDetailsError || isCastError;
 
 	return {
 		data,
@@ -25,10 +25,10 @@ export const useGetMovieData = () => {
 		triggerGetMoreMovies,
 		triggerDetails,
 		movieDetails,
-		triggerKeywords,
-		movieKeywords,
 		triggerCasting,
 		movieCast,
+		triggerImages,
+		movieImages,
 		isApiError,
 	};
 };

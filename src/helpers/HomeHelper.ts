@@ -1,4 +1,4 @@
-import { Credits } from '../models/MovieResponse';
+import { Credits, Images } from '../models/MovieResponse';
 
 let previousResult: number | null = null;
 
@@ -34,4 +34,9 @@ export const getRandomActor = (movieCast: Credits) => {
 	// Skip the top-billed lead (too obvious a clue) but fall back to it for small casts.
 	const index = Math.min(2, actorsListByPopularity.length - 1);
 	return actorsListByPopularity[index];
+};
+
+export const getLocalizedPoster = (images: Images | undefined, fallbackPosterPath?: string): string | undefined => {
+	const spanishPoster = images?.posters.find(poster => poster.iso_639_1 === 'es');
+	return spanishPoster?.file_path ?? fallbackPosterPath;
 };

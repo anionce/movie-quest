@@ -14,4 +14,6 @@ export const POPULARITY_VALUE = 1500;
 
 export const MINIMUM_VOTE = 5.5;
 
-export const LANGUAGE = 'en-US';
+export const getTmdbLanguage = () => (localStorage.getItem('movieQuestLanguage') === 'en' ? 'en-US' : 'es-ES');
+
+export const getImageLanguage = () => (localStorage.getItem('movieQuestLanguage') === 'en' ? 'en' : 'es');

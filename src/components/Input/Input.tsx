@@ -3,6 +3,7 @@ import './Input.scss';
 import TextField from '@mui/material/TextField';
 import { GuessButton } from '../GuessButton/GuessButton';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type InputProps = {
 	searchableResults: string[];
@@ -16,6 +17,7 @@ const MIN_CHARS_TO_SEARCH = 3;
 const defaultFilter = createFilterOptions<string>();
 
 export const Input = ({ searchableResults, guessMovie, setGameError, gameError }: InputProps) => {
+	const { t } = useTranslation();
 	const [inputValue, setInputValue] = useState('');
 	const [inputText, setInputText] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
@@ -57,10 +59,10 @@ export const Input = ({ searchableResults, guessMovie, setGameError, gameError }
 								...params.InputProps,
 							}}
 							type='search'
-							placeholder='Type a movie title...'
+							placeholder={t('input.placeholder')}
 							inputProps={{
 								...params.inputProps,
-								'aria-label': 'Type a movie title to guess',
+								'aria-label': t('input.ariaLabel'),
 							}}
 						/>
 					)}
@@ -73,7 +75,7 @@ export const Input = ({ searchableResults, guessMovie, setGameError, gameError }
 					value={inputValue}
 				/>
 			</div>
-			{gameError && <span className='guess-error-message'>Nope, that's not it — try again!</span>}
+			{gameError && <span className='guess-error-message'>{t('input.error')}</span>}
 		</div>
 	);
 };

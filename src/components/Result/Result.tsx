@@ -10,12 +10,14 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import { IMAGE_BASE_URL } from '../../services/endpoints';
 import { addLeaderboardEntry } from '../../services/leaderboard';
+import { useTranslation } from 'react-i18next';
 
 export type ResultProps = {
 	result: string;
 };
 
 export const Result = ({ result }: ResultProps) => {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const hasSavedScore = useRef(false);
 
@@ -43,20 +45,20 @@ export const Result = ({ result }: ResultProps) => {
 						{isWin ? <CheckCircleIcon className='correct' /> : <DangerousIcon className='incorrect' />}
 					</div>
 				)}
-				<span className='result-label'>{isWin ? 'You got it!' : 'The movie was'}</span>
+				<span className='result-label'>{isWin ? t('result.youGotIt') : t('result.movieWas')}</span>
 				<h1 className='result-title'>{movieResult}</h1>
 				{isWin ? (
 					<div className='result-score-row'>
 						<span className='result-score'>
-							{finalScore} point{finalScore !== 1 ? 's' : ''}
+							{finalScore} {finalScore === 1 ? t('result.point') : t('result.points')}
 						</span>
 						{finalScore === 0 && <SentimentDissatisfiedIcon className='result-score-icon' />}
 					</div>
 				) : (
-					<span className='result-score'>You lost...</span>
+					<span className='result-score'>{t('result.youLost')}</span>
 				)}
 			</div>
-			<FooterButton value={<LoopIcon />} type='home' action={goHome} label='Play again' />
+			<FooterButton value={<LoopIcon />} type='home' action={goHome} label={t('buttons.playAgain')} />
 		</div>
 	);
 };

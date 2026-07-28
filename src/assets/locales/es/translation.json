@@ -1,0 +1,51 @@
+{
+	"input": {
+		"placeholder": "Escribe el título de una película...",
+		"ariaLabel": "Escribe el título de una película para adivinar",
+		"error": "Uy, no es esa — ¡inténtalo de nuevo!"
+	},
+	"buttons": {
+		"guess": "Adivinar",
+		"getHint": "Más pistas",
+		"seeResult": "Ver resultado",
+		"viewRules": "Ver reglas",
+		"viewLeaderboard": "Ver clasificación",
+		"restartGame": "Reiniciar partida",
+		"goBackHome": "Volver al inicio",
+		"playAgain": "Jugar de nuevo",
+		"close": "Cerrar"
+	},
+	"clues": {
+		"tagline": "Eslogan:",
+		"cast": "Reparto:"
+	},
+	"rules": {
+		"title": "Cómo jugar",
+		"intro": "¡Adivina la película antes de quedarte sin pistas!",
+		"step1": "Empiezas con 3 pistas: el <strong>año</strong> de estreno, el <strong>género</strong> y algunas letras del título.",
+		"step2": "Escribe tu respuesta, selecciónala de la lista y pulsa el botón verde <strong>Adivinar</strong>.",
+		"step3": "¿Atascado? Pulsa <strong>Más pistas</strong> para ver el eslogan y un actor del reparto — cada pista cuesta un punto.",
+		"step4": "¿Sin pistas? Aún puedes revelar la respuesta. ¡Tu puntuación final entra en la clasificación!"
+	},
+	"leaderboard": {
+		"title": "Clasificación",
+		"intro": "Tus mejores puntuaciones, guardadas en este dispositivo.",
+		"empty": "Aún no hay puntuaciones — ¡gana una partida para aparecer aquí!"
+	},
+	"result": {
+		"youGotIt": "¡Acertaste!",
+		"movieWas": "La película era",
+		"youLost": "Perdiste...",
+		"point": "punto",
+		"points": "puntos"
+	},
+	"error": {
+		"label": "¡Vaya!",
+		"title": "Ha ocurrido un error",
+		"subtitle": "No pudimos conectar con la base de datos de películas. Inténtalo de nuevo."
+	},
+	"language": {
+		"toggleLabel": "Cambiar a inglés",
+		"toggleShort": "EN"
+	}
+}

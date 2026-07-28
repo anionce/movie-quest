@@ -64,21 +64,6 @@
 	display: none;
 }
 
-.keywords-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 6px;
-
-	.keywords {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 8px;
-		justify-content: center;
-	}
-}
-
 .tagline-container {
 	display: flex;
 	flex-direction: column;

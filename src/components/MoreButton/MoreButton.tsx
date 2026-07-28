@@ -2,10 +2,12 @@ import './MoreButton.scss';
 import SearchIcon from '@mui/icons-material/Search';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export type MoreButtonProps = { getMoreClues: () => void; gameFinished: boolean };
 
 export const MoreButton = ({ getMoreClues, gameFinished }: MoreButtonProps) => {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const getClass = () => (gameFinished ? 'lost-button' : 'more-button');
 
@@ -18,12 +20,12 @@ export const MoreButton = ({ getMoreClues, gameFinished }: MoreButtonProps) => {
 			{gameFinished ? (
 				<div className='check-result'>
 					<SentimentDissatisfiedIcon fontSize='small' />
-					<span>See result</span>
+					<span>{t('buttons.seeResult')}</span>
 				</div>
 			) : (
 				<div className='get-hint'>
 					<SearchIcon />
-					<span>Get hint</span>
+					<span>{t('buttons.getHint')}</span>
 				</div>
 			)}
 		</button>

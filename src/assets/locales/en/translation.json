@@ -1,1 +1,51 @@
-{}
+{
+	"input": {
+		"placeholder": "Type a movie title...",
+		"ariaLabel": "Type a movie title to guess",
+		"error": "Nope, that's not it — try again!"
+	},
+	"buttons": {
+		"guess": "Guess",
+		"getHint": "Get hint",
+		"seeResult": "See result",
+		"viewRules": "View rules",
+		"viewLeaderboard": "View leaderboard",
+		"restartGame": "Restart game",
+		"goBackHome": "Go back home",
+		"playAgain": "Play again",
+		"close": "Close"
+	},
+	"clues": {
+		"tagline": "Tagline:",
+		"cast": "Cast:"
+	},
+	"rules": {
+		"title": "How to play",
+		"intro": "Guess the movie before you run out of hints!",
+		"step1": "Start with 3 clues: the release <strong>year</strong>, the <strong>genre</strong>, and a few letters of the title.",
+		"step2": "Type your guess, pick it from the list, then hit the green <strong>Guess</strong> button.",
+		"step3": "Stuck? Tap <strong>Get hint</strong> for the tagline and a cast member — each hint costs one point.",
+		"step4": "Out of hints? You can still reveal the answer. Your final score joins the leaderboard!"
+	},
+	"leaderboard": {
+		"title": "Leaderboard",
+		"intro": "Your best scores, saved on this device.",
+		"empty": "No scores yet — win a round to make the list!"
+	},
+	"result": {
+		"youGotIt": "You got it!",
+		"movieWas": "The movie was",
+		"youLost": "You lost...",
+		"point": "point",
+		"points": "points"
+	},
+	"error": {
+		"label": "Ooops!",
+		"title": "There has been an error",
+		"subtitle": "We couldn't reach the movie database. Please try again."
+	},
+	"language": {
+		"toggleLabel": "Switch to Spanish",
+		"toggleShort": "ES"
+	}
+}

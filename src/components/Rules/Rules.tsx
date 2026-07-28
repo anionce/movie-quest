@@ -1,36 +1,37 @@
 import './Rules.scss';
 import MovieFilterIcon from '@mui/icons-material/MovieFilter';
+import { Trans, useTranslation } from 'react-i18next';
 
 export const Rules = () => {
+	const { t } = useTranslation();
+
 	return (
 		<>
-			<h2 className='rules-title'>How to play</h2>
-			<p className='rules-intro'>Guess the movie before you run out of hints!</p>
+			<h2 className='rules-title'>{t('rules.title')}</h2>
+			<p className='rules-intro'>{t('rules.intro')}</p>
 			<ul className='rules-list'>
 				<li>
 					<span className='rules-step'>1</span>
 					<span className='rules-text'>
-						Start with 3 clues: the release <strong>year</strong>, the <strong>genre</strong>, and a few
-						letters of the title.
+						<Trans i18nKey='rules.step1' components={{ strong: <strong /> }} />
 					</span>
 				</li>
 				<li>
 					<span className='rules-step'>2</span>
 					<span className='rules-text'>
-						Type your guess, pick it from the list, then hit the green <strong>Guess</strong> button.
+						<Trans i18nKey='rules.step2' components={{ strong: <strong /> }} />
 					</span>
 				</li>
 				<li>
 					<span className='rules-step'>3</span>
 					<span className='rules-text'>
-						Stuck? Tap <strong>Get hint</strong> for keywords, the tagline, and a cast member — each hint
-						costs one point.
+						<Trans i18nKey='rules.step3' components={{ strong: <strong /> }} />
 					</span>
 				</li>
 				<li>
 					<span className='rules-step'>4</span>
 					<span className='rules-text'>
-						Out of hints? You can still reveal the answer. Your final score joins the leaderboard!
+						<Trans i18nKey='rules.step4' components={{ strong: <strong /> }} />
 					</span>
 				</li>
 			</ul>

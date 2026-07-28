@@ -1,16 +1,18 @@
 import './Leaderboard.scss';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import { getLeaderboard } from '../../services/leaderboard';
+import { useTranslation } from 'react-i18next';
 
 export const Leaderboard = () => {
+	const { t } = useTranslation();
 	const entries = getLeaderboard();
 
 	return (
 		<>
-			<h2 className='leaderboard-title'>Leaderboard</h2>
-			<p className='leaderboard-intro'>Your best scores, saved on this device.</p>
+			<h2 className='leaderboard-title'>{t('leaderboard.title')}</h2>
+			<p className='leaderboard-intro'>{t('leaderboard.intro')}</p>
 			{entries.length === 0 ? (
-				<p className='leaderboard-empty'>No scores yet — win a round to make the list!</p>
+				<p className='leaderboard-empty'>{t('leaderboard.empty')}</p>
 			) : (
 				<ol className='leaderboard-list'>
 					{entries.map((entry, index) => (

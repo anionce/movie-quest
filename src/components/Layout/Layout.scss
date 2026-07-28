@@ -7,7 +7,9 @@
 	align-items: center;
 	width: 100%;
 	max-width: $lg;
+	margin: 0 auto;
 	overflow: hidden;
+	box-sizing: border-box;
 }
 
 @media only screen and (max-width: $md) {
