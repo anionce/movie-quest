@@ -40,3 +40,17 @@ export const getLocalizedPoster = (images: Images | undefined, fallbackPosterPat
 	const spanishPoster = images?.posters.find(poster => poster.iso_639_1 === 'es');
 	return spanishPoster?.file_path ?? fallbackPosterPath;
 };
+
+export const getMovieStill = (images: Images | undefined): string | undefined => {
+	if (!images?.backdrops?.length) return undefined;
+
+	// Pick from the whole pool (not just the top-voted, most iconic shots) so the still is a
+	// genuine hint rather than a giveaway — the highest-voted backdrop is usually the poster's hero shot.
+	const index = Math.floor(Math.random() * images.backdrops.length);
+	return images.backdrops[index]?.file_path;
+};
+
+export const getRandomValueInRange = (min: number, max: number): number => {
+	if (max <= min) return min;
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+};

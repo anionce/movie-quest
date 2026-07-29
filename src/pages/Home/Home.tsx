@@ -1,9 +1,16 @@
 import { Dispatch, useEffect, useState } from 'react';
 import './Home.scss';
-import { getLocalizedPoster, getRandomActor, getRandomValue, getTruncatedGenre } from '../../helpers/HomeHelper';
+import {
+	getLocalizedPoster,
+	getMovieStill,
+	getRandomActor,
+	getRandomValue,
+	getRandomValueInRange,
+	getTruncatedGenre,
+} from '../../helpers/HomeHelper';
 import { GenreDetail, Movie } from '../../models/MovieResponse';
 import { ClueButton } from '../../components/ClueButton/ClueButton';
-import { ExtraClues, MovieClues, availableClueLetter } from '../../constants/MovieClues';
+import { Difficulty, EASY_MAX_PAGE, ExtraClues, MovieClues, availableClueLetter } from '../../constants/MovieClues';
 import { Input } from '../../components/Input/Input';
 import { MoreButton } from '../../components/MoreButton/MoreButton';
 import { Hangman } from '../../components/Hangman/Hangman';
@@ -25,6 +32,11 @@ import { Rules } from '../../components/Rules/Rules';
 import { Leaderboard } from '../../components/Leaderboard/Leaderboard';
 import { Modal } from '../../components/Modal/Modal';
 import { useSelector } from 'react-redux';
+import { IMAGE_BASE_URL } from '../../services/endpoints';
+
+const DIFFICULTY_KEY = 'movieQuestDifficulty';
+
+const getStoredDifficulty = (): Difficulty => (localStorage.getItem(DIFFICULTY_KEY) === 'hard' ? 'hard' : 'easy');
 
 export const Home = () => {
 	const { t } = useTranslation();
@@ -46,6 +58,7 @@ export const Home = () => {
 		isApiError,
 	} = useGetMovieData();
 
+	const [difficulty, setDifficulty] = useState<Difficulty>(getStoredDifficulty);
 	const [shouldRefresh, setShouldRefresh] = useState(false);
 	const [totalPages, setTotalPages] = useState<number | undefined>(undefined);
 	const [movieToGuess, setMovieToGuess] = useState<Movie | undefined>(undefined);
@@ -55,6 +68,7 @@ export const Home = () => {
 	const [gameError, setGameError] = useState<boolean>(false);
 	const [toggleClues, setToggleClues] = useState<ExtraClues>({
 		tagline: false,
+		still: false,
 		actor: false,
 	});
 	const [showModal, setShowModal] = useState(false);
@@ -70,9 +84,10 @@ export const Home = () => {
 	const isLoading = isLoadingMovieData || !shouldShowFirstClues;
 	const shouldShowInput = shouldShowFirstClues;
 	const shouldShowTagline = movieClues?.tagline && toggleClues.tagline;
+	const shouldShowStill = movieClues?.still && toggleClues.still;
 	const shouldShowActor = movieClues?.actor && toggleClues.actor;
 
-	const isGameFinished = toggleClues.actor || cluesLeft === 0;
+	const isGameFinished = toggleClues.still || cluesLeft === 0;
 
 	const refreshPage = () => {
 		setShouldRefresh(false);
@@ -87,11 +102,19 @@ export const Home = () => {
 		setAdditionalClues(0);
 		setToggleClues({
 			tagline: false,
+			still: false,
 			actor: false,
 		});
 		navigate('/');
 		const randomPage = getRandomValue(10);
 		triggerPages({ page: randomPage });
+	};
+
+	const handleDifficultyChange = (value: Difficulty) => {
+		if (value === difficulty) return;
+		localStorage.setItem(DIFFICULTY_KEY, value);
+		setDifficulty(value);
+		refreshPage();
 	};
 
 	const getMoreClues = () => {
@@ -105,6 +128,9 @@ export const Home = () => {
 			}
 			if (toggleClues.tagline && !toggleClues.actor) {
 				return setToggleClues(prev => ({ ...prev, actor: true }));
+			}
+			if (toggleClues.actor && !toggleClues.still) {
+				return setToggleClues(prev => ({ ...prev, still: true }));
 			}
 		}
 	};
@@ -169,11 +195,15 @@ export const Home = () => {
 		if (data) {
 			setTotalPages(data.total_pages);
 			if (data.total_pages) {
-				const page = getRandomValue(data.total_pages);
+				const maxEasyPage = Math.min(EASY_MAX_PAGE, data.total_pages);
+				const page =
+					difficulty === 'easy' || data.total_pages <= maxEasyPage
+						? getRandomValue(maxEasyPage)
+						: getRandomValueInRange(maxEasyPage + 1, data.total_pages);
 				triggerGetMovies({ page });
 			}
 		}
-	}, [data]);
+	}, [data, difficulty]);
 
 	useEffect(() => {
 		if (movieData) {
@@ -234,11 +264,12 @@ export const Home = () => {
 				...prev,
 				tagline: movieDetails.tagline,
 				actor: getRandomActor(movieCast),
+				still: getMovieStill(movieImages),
 			}));
 		} else if (!movieDetails?.tagline) {
 			setShouldRefresh(true);
 		}
-	}, [movieDetails, movieCast]);
+	}, [movieDetails, movieCast, movieImages]);
 
 	useEffect(() => {
 		let timeoutId: NodeJS.Timeout;
@@ -292,10 +323,34 @@ export const Home = () => {
 
 	return (
 		<div className='home-container'>
+			<div className='difficulty-toggle' role='group' aria-label={t('difficulty.label')}>
+				<button
+					type='button'
+					className={difficulty === 'easy' ? 'difficulty-option active' : 'difficulty-option'}
+					onClick={() => handleDifficultyChange('easy')}
+				>
+					{t('difficulty.easy')}
+				</button>
+				<button
+					type='button'
+					className={difficulty === 'hard' ? 'difficulty-option active' : 'difficulty-option'}
+					onClick={() => handleDifficultyChange('hard')}
+				>
+					{t('difficulty.hard')}
+				</button>
+			</div>
+
 			{isLoading && <Loader />}
 			{!isLoading && (
 				<>
 					<div className='game-container'>
+						{shouldShowFirstClues && <Hangman value={movieToGuess.title} revealedLetters={revealedLetters} />}
+						{shouldShowFirstClues && (
+							<div className='first-clues-container'>
+								<ClueButton value={movieClues.year} type='year' />
+								<ClueButton value={movieClues.genres} type='genre' />
+							</div>
+						)}
 						{shouldShowInput && (
 							<Input
 								searchableResults={searchableResults}
@@ -303,15 +358,6 @@ export const Home = () => {
 								setGameError={setGameError}
 								gameError={gameError}
 							/>
-						)}
-						{shouldShowFirstClues && (
-							<div className='clues-container'>
-								<div className='first-clues-container'>
-									<ClueButton value={movieClues.year} type='year' />
-									<ClueButton value={movieClues.genres} type='genre' />
-								</div>
-								<Hangman value={movieToGuess.title} revealedLetters={revealedLetters} />
-							</div>
 						)}
 						<div className='extra-clues-scroll'>
 							{shouldShowTagline && (
@@ -324,6 +370,12 @@ export const Home = () => {
 								<div className='actor-container'>
 									<span className='clue-title'>{t('clues.cast')}</span>
 									<ClueButton value={movieClues.actor} type='actor' />
+								</div>
+							)}
+							{shouldShowStill && (
+								<div className='still-container'>
+									<span className='clue-title'>{t('clues.still')}</span>
+									<img src={`${IMAGE_BASE_URL}${movieClues.still}`} alt={t('clues.still')} className='still-image' />
 								</div>
 							)}
 						</div>

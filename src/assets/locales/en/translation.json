@@ -17,14 +17,20 @@
 	},
 	"clues": {
 		"tagline": "Tagline:",
-		"cast": "Cast:"
+		"cast": "Cast:",
+		"still": "Movie still:"
+	},
+	"difficulty": {
+		"label": "Level",
+		"easy": "Easy",
+		"hard": "Hard"
 	},
 	"rules": {
 		"title": "How to play",
 		"intro": "Guess the movie before you run out of hints!",
 		"step1": "Start with 3 clues: the release <strong>year</strong>, the <strong>genre</strong>, and a few letters of the title.",
 		"step2": "Type your guess, pick it from the list, then hit the green <strong>Guess</strong> button.",
-		"step3": "Stuck? Tap <strong>Get hint</strong> for the tagline and a cast member — each hint costs one point.",
+		"step3": "Stuck? Tap <strong>Get hint</strong> for the tagline, a movie still, and a cast member — each hint costs one point.",
 		"step4": "Out of hints? You can still reveal the answer. Your final score joins the leaderboard!"
 	},
 	"leaderboard": {

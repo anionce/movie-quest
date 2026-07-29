@@ -17,14 +17,20 @@
 	},
 	"clues": {
 		"tagline": "Eslogan:",
-		"cast": "Reparto:"
+		"cast": "Reparto:",
+		"still": "Fotograma:"
+	},
+	"difficulty": {
+		"label": "Nivel",
+		"easy": "Fácil",
+		"hard": "Difícil"
 	},
 	"rules": {
 		"title": "Cómo jugar",
 		"intro": "¡Adivina la película antes de quedarte sin pistas!",
 		"step1": "Empiezas con 3 pistas: el <strong>año</strong> de estreno, el <strong>género</strong> y algunas letras del título.",
 		"step2": "Escribe tu respuesta, selecciónala de la lista y pulsa el botón verde <strong>Adivinar</strong>.",
-		"step3": "¿Atascado? Pulsa <strong>Más pistas</strong> para ver el eslogan y un actor del reparto — cada pista cuesta un punto.",
+		"step3": "¿Atascado? Pulsa <strong>Más pistas</strong> para ver el eslogan, un fotograma de la película y un actor del reparto — cada pista cuesta un punto.",
 		"step4": "¿Sin pistas? Aún puedes revelar la respuesta. ¡Tu puntuación final entra en la clasificación!"
 	},
 	"leaderboard": {

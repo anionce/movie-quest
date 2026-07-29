@@ -22,42 +22,66 @@
 	box-sizing: border-box;
 }
 
+.difficulty-toggle {
+	display: flex;
+	flex-shrink: 0;
+	gap: 4px;
+	padding: 4px;
+	background-color: $color-surface;
+	border-radius: $radius-chip;
+	box-shadow: $shadow-sm;
+}
+
+.difficulty-option {
+	height: 26px;
+	padding: 0 16px;
+	font-size: 12px;
+	font-weight: 700;
+	background-color: transparent;
+	color: $color-muted;
+	box-shadow: none;
+}
+
+.difficulty-option:hover:not(.active) {
+	filter: none;
+	transform: none;
+	box-shadow: none;
+	color: $color-ink;
+}
+
+.difficulty-option.active {
+	background-color: $color-primary;
+	color: $color-surface;
+}
+
 .game-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 	width: 100%;
 	flex: 1;
 	min-height: 0;
-	gap: 14px;
-	overflow: hidden;
+	gap: 10px;
+	overflow-y: auto;
+	padding-bottom: 4px;
 }
 
-.clues-container {
+.first-clues-container {
 	display: flex;
-	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: 12px;
+	gap: 10px;
 	flex-shrink: 0;
-
-	.first-clues-container {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-	}
 }
 
 .extra-clues-scroll {
-	max-height: 44vh;
 	width: 100%;
-	overflow-y: auto;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 14px;
-	padding: 4px 0 8px 0;
+	gap: 8px;
+	padding: 2px 0 6px 0;
 }
 
 .extra-clues-scroll:empty {
@@ -69,7 +93,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: 6px;
+	gap: 4px;
 }
 
 .actor-container {
@@ -77,7 +101,25 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: 6px;
+	gap: 4px;
+}
+
+.still-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+}
+
+.still-image {
+	height: 84px;
+	width: auto;
+	max-width: min(240px, 70vw);
+	border-radius: 12px;
+	box-shadow: $shadow-sm;
+	object-fit: cover;
+	filter: blur(0.6px) saturate(0.95);
 }
 
 @media only screen and (max-width: $md) {
@@ -87,5 +129,9 @@
 
 	.home-container {
 		margin: 0;
+	}
+
+	.still-image {
+		height: 64px;
 	}
 }

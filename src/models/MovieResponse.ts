@@ -64,6 +64,7 @@ export type ImagePoster = {
 
 export type Images = {
 	id: number;
+	backdrops: ImagePoster[];
 	posters: ImagePoster[];
 };
 
