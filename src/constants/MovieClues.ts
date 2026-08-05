@@ -6,14 +6,8 @@ export type MovieClues = {
 	still?: string;
 };
 
-export type ExtraClues = {
-	tagline: boolean;
-	still: boolean;
-	actor: boolean;
-};
+export type ExtraClueKey = 'tagline' | 'actor' | 'still';
+
+export const CLUE_ORDER: ExtraClueKey[] = ['tagline', 'actor', 'still'];
 
 export const availableClueLetter = ['a', 'e', 'm'];
-
-export const EASY_MAX_PAGE = 10;
-
-export type Difficulty = 'easy' | 'hard';

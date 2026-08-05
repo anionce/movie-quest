@@ -2,11 +2,16 @@ import { Credits, Images } from '../models/MovieResponse';
 
 let previousResult: number | null = null;
 
+export const getRandomValueInRange = (min: number, max: number): number => {
+	if (max <= min) return min;
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 export const getRandomValue = (value: number): number => {
 	let result: number;
 
 	do {
-		result = Math.floor(Math.random() * value) + 1;
+		result = getRandomValueInRange(1, value);
 	} while (result === previousResult);
 
 	previousResult = result;
@@ -48,9 +53,4 @@ export const getMovieStill = (images: Images | undefined): string | undefined =>
 	// genuine hint rather than a giveaway — the highest-voted backdrop is usually the poster's hero shot.
 	const index = Math.floor(Math.random() * images.backdrops.length);
 	return images.backdrops[index]?.file_path;
-};
-
-export const getRandomValueInRange = (min: number, max: number): number => {
-	if (max <= min) return min;
-	return Math.floor(Math.random() * (max - min + 1)) + min;
 };

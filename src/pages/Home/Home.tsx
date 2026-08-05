@@ -10,7 +10,7 @@ import {
 } from '../../helpers/HomeHelper';
 import { GenreDetail, Movie } from '../../models/MovieResponse';
 import { ClueButton } from '../../components/ClueButton/ClueButton';
-import { Difficulty, EASY_MAX_PAGE, ExtraClues, MovieClues, availableClueLetter } from '../../constants/MovieClues';
+import { CLUE_ORDER, MovieClues, availableClueLetter } from '../../constants/MovieClues';
 import { Input } from '../../components/Input/Input';
 import { MoreButton } from '../../components/MoreButton/MoreButton';
 import { Hangman } from '../../components/Hangman/Hangman';
@@ -32,11 +32,13 @@ import { Rules } from '../../components/Rules/Rules';
 import { Leaderboard } from '../../components/Leaderboard/Leaderboard';
 import { Modal } from '../../components/Modal/Modal';
 import { useSelector } from 'react-redux';
-import { IMAGE_BASE_URL } from '../../services/endpoints';
-
-const DIFFICULTY_KEY = 'movieQuestDifficulty';
-
-const getStoredDifficulty = (): Difficulty => (localStorage.getItem(DIFFICULTY_KEY) === 'hard' ? 'hard' : 'easy');
+import {
+	Difficulty,
+	EASY_MAX_PAGE,
+	IMAGE_THUMB_URL,
+	getStoredDifficulty,
+	setStoredDifficulty,
+} from '../../services/endpoints';
 
 export const Home = () => {
 	const { t } = useTranslation();
@@ -66,11 +68,7 @@ export const Home = () => {
 	const [searchableResults, setSearchableResults] = useState<string[]>([]);
 
 	const [gameError, setGameError] = useState<boolean>(false);
-	const [toggleClues, setToggleClues] = useState<ExtraClues>({
-		tagline: false,
-		still: false,
-		actor: false,
-	});
+	const [revealedClueCount, setRevealedClueCount] = useState(0);
 	const [showModal, setShowModal] = useState(false);
 	const [showLeaderboard, setShowLeaderboard] = useState(false);
 	const [lettersToReveal, setLettersToReveal] = useState<number>(0);
@@ -83,11 +81,11 @@ export const Home = () => {
 		movieToGuess?.title && movieClues?.genres && movieClues?.year && movieDetails?.tagline && movieCast;
 	const isLoading = isLoadingMovieData || !shouldShowFirstClues;
 	const shouldShowInput = shouldShowFirstClues;
-	const shouldShowTagline = movieClues?.tagline && toggleClues.tagline;
-	const shouldShowStill = movieClues?.still && toggleClues.still;
-	const shouldShowActor = movieClues?.actor && toggleClues.actor;
+	const shouldShowTagline = movieClues?.tagline && revealedClueCount >= CLUE_ORDER.indexOf('tagline') + 1;
+	const shouldShowActor = movieClues?.actor && revealedClueCount >= CLUE_ORDER.indexOf('actor') + 1;
+	const shouldShowStill = movieClues?.still && revealedClueCount >= CLUE_ORDER.indexOf('still') + 1;
 
-	const isGameFinished = toggleClues.still || cluesLeft === 0;
+	const isGameFinished = revealedClueCount >= CLUE_ORDER.length || cluesLeft === 0;
 
 	const refreshPage = () => {
 		setShouldRefresh(false);
@@ -100,11 +98,7 @@ export const Home = () => {
 		setLettersToReveal(0);
 		setRevealedLetters([]);
 		setAdditionalClues(0);
-		setToggleClues({
-			tagline: false,
-			still: false,
-			actor: false,
-		});
+		setRevealedClueCount(0);
 		navigate('/');
 		const randomPage = getRandomValue(10);
 		triggerPages({ page: randomPage });
@@ -112,7 +106,7 @@ export const Home = () => {
 
 	const handleDifficultyChange = (value: Difficulty) => {
 		if (value === difficulty) return;
-		localStorage.setItem(DIFFICULTY_KEY, value);
+		setStoredDifficulty(value);
 		setDifficulty(value);
 		refreshPage();
 	};
@@ -122,16 +116,8 @@ export const Home = () => {
 		dispatch(decreaseClues());
 		if (lettersToReveal) {
 			revealLettersBasedOnClue();
-		} else {
-			if (!toggleClues.tagline) {
-				return setToggleClues(prev => ({ ...prev, tagline: true }));
-			}
-			if (toggleClues.tagline && !toggleClues.actor) {
-				return setToggleClues(prev => ({ ...prev, actor: true }));
-			}
-			if (toggleClues.actor && !toggleClues.still) {
-				return setToggleClues(prev => ({ ...prev, still: true }));
-			}
+		} else if (revealedClueCount < CLUE_ORDER.length) {
+			setRevealedClueCount(prev => prev + 1);
 		}
 	};
 
@@ -203,7 +189,11 @@ export const Home = () => {
 				triggerGetMovies({ page });
 			}
 		}
-	}, [data, difficulty]);
+		// difficulty is read here but intentionally left out of the deps: every difficulty
+		// change already triggers a fresh `data` fetch via refreshPage, so this effect
+		// re-runs then with the up-to-date value instead of firing an extra time on toggle.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data]);
 
 	useEffect(() => {
 		if (movieData) {
@@ -264,12 +254,17 @@ export const Home = () => {
 				...prev,
 				tagline: movieDetails.tagline,
 				actor: getRandomActor(movieCast),
-				still: getMovieStill(movieImages),
 			}));
 		} else if (!movieDetails?.tagline) {
 			setShouldRefresh(true);
 		}
-	}, [movieDetails, movieCast, movieImages]);
+	}, [movieDetails, movieCast]);
+
+	useEffect(() => {
+		if (movieImages) {
+			setMovieClues(prev => (prev ? { ...prev, still: getMovieStill(movieImages) } : prev));
+		}
+	}, [movieImages]);
 
 	useEffect(() => {
 		let timeoutId: NodeJS.Timeout;
@@ -326,14 +321,14 @@ export const Home = () => {
 			<div className='difficulty-toggle' role='group' aria-label={t('difficulty.label')}>
 				<button
 					type='button'
-					className={difficulty === 'easy' ? 'difficulty-option active' : 'difficulty-option'}
+					className={`difficulty-option${difficulty === 'easy' ? ' active' : ''}`}
 					onClick={() => handleDifficultyChange('easy')}
 				>
 					{t('difficulty.easy')}
 				</button>
 				<button
 					type='button'
-					className={difficulty === 'hard' ? 'difficulty-option active' : 'difficulty-option'}
+					className={`difficulty-option${difficulty === 'hard' ? ' active' : ''}`}
 					onClick={() => handleDifficultyChange('hard')}
 				>
 					{t('difficulty.hard')}
@@ -375,7 +370,7 @@ export const Home = () => {
 							{shouldShowStill && (
 								<div className='still-container'>
 									<span className='clue-title'>{t('clues.still')}</span>
-									<img src={`${IMAGE_BASE_URL}${movieClues.still}`} alt={t('clues.still')} className='still-image' />
+									<img src={`${IMAGE_THUMB_URL}${movieClues.still}`} alt={t('clues.still')} className='still-image' />
 								</div>
 							)}
 						</div>
