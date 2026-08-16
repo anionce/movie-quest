@@ -1,9 +1,8 @@
-@import '../../assets/styles/variables.scss';
-
 .more-button {
 	font-size: $font-size-xs;
 	min-width: 160px;
 	white-space: nowrap;
+	flex-shrink: 0;
 }
 
 .lost-button {
@@ -11,6 +10,7 @@
 	min-width: 160px;
 	white-space: nowrap;
 	background-color: $color-red;
+	flex-shrink: 0;
 }
 
 .check-result {

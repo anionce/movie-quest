@@ -1,5 +1,3 @@
-@import '../../assets/styles/variables.scss';
-
 .game-footer-container {
 	display: flex;
 	width: 100%;
@@ -8,6 +6,7 @@
 	gap: 8px;
 	font-weight: bold;
 	margin-bottom: 12px;
+	flex-shrink: 0;
 }
 
 .game-footer-clues {

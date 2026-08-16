@@ -1,5 +1,3 @@
-@import '/src/assets/styles/variables.scss';
-
 :root {
 	font-family: $main-font, 'Helvetica Neue', Arial, sans-serif;
 	font-weight: 400;
@@ -31,6 +29,7 @@ body {
 	justify-content: center;
 	margin: 2px;
 	height: calc(100vh - 4px);
+	height: calc(100dvh - 4px);
 	overflow: hidden;
 }
 

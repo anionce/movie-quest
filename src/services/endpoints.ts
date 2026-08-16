@@ -22,7 +22,7 @@ export const getImageLanguage = () => (localStorage.getItem('movieQuestLanguage'
 
 export type Difficulty = 'easy' | 'hard';
 
-export const EASY_MAX_PAGE = 10;
+export const EASY_MAX_PAGE = 35;
 
 const DIFFICULTY_STORAGE_KEY = 'movieQuestDifficulty';
 

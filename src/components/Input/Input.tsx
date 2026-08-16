@@ -55,14 +55,14 @@ export const Input = ({ searchableResults, guessMovie, setGameError, gameError }
 					renderInput={params => (
 						<TextField
 							{...params}
-							InputProps={{
-								...params.InputProps,
-							}}
 							type='search'
 							placeholder={t('input.placeholder')}
-							inputProps={{
-								...params.inputProps,
-								'aria-label': t('input.ariaLabel'),
+							slotProps={{
+								...params.slotProps,
+								htmlInput: {
+									...params.slotProps.htmlInput,
+									'aria-label': t('input.ariaLabel'),
+								},
 							}}
 						/>
 					)}

@@ -39,6 +39,7 @@ import {
 	getStoredDifficulty,
 	setStoredDifficulty,
 } from '../../services/endpoints';
+import { addRecentMovieId, getRecentMovieIds } from '../../services/recentMovies';
 
 export const Home = () => {
 	const { t } = useTranslation();
@@ -197,9 +198,12 @@ export const Home = () => {
 
 	useEffect(() => {
 		if (movieData) {
-			const randomElement = getRandomValue(18);
-			const movieToGuess = movieData.results[randomElement];
+			const recentIds = getRecentMovieIds();
+			const freshResults = movieData.results.filter(movie => !recentIds.includes(movie.id));
+			const candidates = freshResults.length > 0 ? freshResults : movieData.results;
+			const movieToGuess = candidates[getRandomValueInRange(0, candidates.length - 1)];
 			setMovieToGuess(movieToGuess);
+			addRecentMovieId(movieToGuess.id);
 
 			const titleArray = movieData.results.map((movie: Movie) => movie.title).filter(Boolean);
 			setSearchableResults(titleArray);

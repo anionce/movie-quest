@@ -1,4 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 
 export type ScoreBoardState = { clues: number; movie: string | undefined; moviePoster: string | undefined };
@@ -37,17 +37,8 @@ export const { decreaseClues, setMovie, setMoviePoster, setClues, resetClues } =
 
 export const scoreboarReducer = scoreboardSlice.reducer;
 
-export const selectCluesLeft = createSelector(
-	(state: RootState) => state.scoreBoard.clues,
-	data => data
-);
+export const selectCluesLeft = (state: RootState) => state.scoreBoard.clues;
 
-export const selectMovie = createSelector(
-	(state: RootState) => state.scoreBoard.movie,
-	data => data
-);
+export const selectMovie = (state: RootState) => state.scoreBoard.movie;
 
-export const selectMoviePoster = createSelector(
-	(state: RootState) => state.scoreBoard.moviePoster,
-	data => data
-);
+export const selectMoviePoster = (state: RootState) => state.scoreBoard.moviePoster;

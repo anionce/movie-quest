@@ -1,5 +1,5 @@
 import './GameFooter.scss';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutlineOutlined';
 import LoopIcon from '@mui/icons-material/Loop';
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import { FooterButton } from '../FooterButton/FooterButton';
