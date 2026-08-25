@@ -1,5 +1,5 @@
 import './MoreButton.scss';
-import SearchIcon from '@mui/icons-material/Search';
+import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,7 @@ export const MoreButton = ({ getMoreClues, gameFinished }: MoreButtonProps) => {
 				</div>
 			) : (
 				<div className='get-hint'>
-					<SearchIcon />
+					<LightbulbOutlinedIcon />
 					<span>{t('buttons.getHint')}</span>
 				</div>
 			)}

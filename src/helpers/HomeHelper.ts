@@ -49,8 +49,13 @@ export const getLocalizedPoster = (images: Images | undefined, fallbackPosterPat
 export const getMovieStill = (images: Images | undefined): string | undefined => {
 	if (!images?.backdrops?.length) return undefined;
 
+	// Backdrops with a non-null iso_639_1 are title-card/logo variants (text baked into the
+	// image, e.g. the movie's name) — exclude them so the still is an actual scene, not the answer.
+	const textlessBackdrops = images.backdrops.filter(backdrop => backdrop.iso_639_1 === null);
+	const candidates = textlessBackdrops.length > 0 ? textlessBackdrops : images.backdrops;
+
 	// Pick from the whole pool (not just the top-voted, most iconic shots) so the still is a
 	// genuine hint rather than a giveaway — the highest-voted backdrop is usually the poster's hero shot.
-	const index = Math.floor(Math.random() * images.backdrops.length);
-	return images.backdrops[index]?.file_path;
+	const index = Math.floor(Math.random() * candidates.length);
+	return candidates[index]?.file_path;
 };

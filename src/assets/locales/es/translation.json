@@ -13,7 +13,9 @@
 		"restartGame": "Reiniciar partida",
 		"goBackHome": "Volver al inicio",
 		"playAgain": "Jugar de nuevo",
-		"close": "Cerrar"
+		"close": "Cerrar",
+		"cancel": "Cancelar",
+		"confirm": "Sí, cambiar"
 	},
 	"clues": {
 		"tagline": "Eslogan:",
@@ -51,7 +53,13 @@
 		"subtitle": "No pudimos conectar con la base de datos de películas. Inténtalo de nuevo."
 	},
 	"language": {
-		"toggleLabel": "Cambiar a inglés",
-		"toggleShort": "EN"
+		"selectLabel": "Seleccionar idioma"
+	},
+	"loader": {
+		"pickingMovie": "Eligiendo una película..."
+	},
+	"difficultyConfirm": {
+		"title": "¿Cambiar de dificultad?",
+		"text": "Vas a perder el progreso de la partida actual. ¿Quieres continuar?"
 	}
 }

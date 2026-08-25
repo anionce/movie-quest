@@ -13,7 +13,9 @@
 		"restartGame": "Restart game",
 		"goBackHome": "Go back home",
 		"playAgain": "Play again",
-		"close": "Close"
+		"close": "Close",
+		"cancel": "Cancel",
+		"confirm": "Yes, change it"
 	},
 	"clues": {
 		"tagline": "Tagline:",
@@ -51,7 +53,13 @@
 		"subtitle": "We couldn't reach the movie database. Please try again."
 	},
 	"language": {
-		"toggleLabel": "Switch to Spanish",
-		"toggleShort": "ES"
+		"selectLabel": "Select language"
+	},
+	"loader": {
+		"pickingMovie": "Picking a movie..."
+	},
+	"difficultyConfirm": {
+		"title": "Change difficulty?",
+		"text": "You'll lose your current progress. Do you want to continue?"
 	}
 }

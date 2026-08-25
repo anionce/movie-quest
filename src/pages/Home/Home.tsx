@@ -70,6 +70,7 @@ export const Home = () => {
 
 	const [gameError, setGameError] = useState<boolean>(false);
 	const [revealedClueCount, setRevealedClueCount] = useState(0);
+	const [pendingDifficulty, setPendingDifficulty] = useState<Difficulty | null>(null);
 	const [showModal, setShowModal] = useState(false);
 	const [showLeaderboard, setShowLeaderboard] = useState(false);
 	const [lettersToReveal, setLettersToReveal] = useState<number>(0);
@@ -105,12 +106,28 @@ export const Home = () => {
 		triggerPages({ page: randomPage });
 	};
 
-	const handleDifficultyChange = (value: Difficulty) => {
-		if (value === difficulty) return;
+	const applyDifficultyChange = (value: Difficulty) => {
 		setStoredDifficulty(value);
 		setDifficulty(value);
 		refreshPage();
 	};
+
+	const handleDifficultyChange = (value: Difficulty) => {
+		if (value === difficulty) return;
+		if (isLoading) {
+			applyDifficultyChange(value);
+			return;
+		}
+		setPendingDifficulty(value);
+	};
+
+	const confirmDifficultyChange = () => {
+		if (!pendingDifficulty) return;
+		applyDifficultyChange(pendingDifficulty);
+		setPendingDifficulty(null);
+	};
+
+	const cancelDifficultyChange = () => setPendingDifficulty(null);
 
 	const getMoreClues = () => {
 		setGameError(false);
@@ -398,6 +415,23 @@ export const Home = () => {
 			{showLeaderboard && (
 				<Modal toggleModal={toggleLeaderboard}>
 					<Leaderboard />
+				</Modal>
+			)}
+
+			{pendingDifficulty && (
+				<Modal toggleModal={cancelDifficultyChange}>
+					<div className='confirm-dialog'>
+						<h2 className='confirm-dialog-title'>{t('difficultyConfirm.title')}</h2>
+						<p className='confirm-dialog-text'>{t('difficultyConfirm.text')}</p>
+						<div className='confirm-dialog-actions'>
+							<button type='button' className='confirm-dialog-cancel' onClick={cancelDifficultyChange}>
+								{t('buttons.cancel')}
+							</button>
+							<button type='button' className='confirm-dialog-confirm' onClick={confirmDifficultyChange}>
+								{t('buttons.confirm')}
+							</button>
+						</div>
+					</div>
 				</Modal>
 			)}
 		</div>

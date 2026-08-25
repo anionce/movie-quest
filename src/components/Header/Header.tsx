@@ -2,16 +2,10 @@ import './Header.scss';
 import { Link } from 'react-router-dom';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import { useTranslation } from 'react-i18next';
-import { setAppLanguage } from '../../services/i18n';
+import { LanguageSelect } from '../LanguageSelect/LanguageSelect';
 
 export const Header = () => {
-	const { t, i18n } = useTranslation();
-	const isSpanish = i18n.language === 'es';
-
-	const toggleLanguage = () => {
-		setAppLanguage(isSpanish ? 'en' : 'es');
-		window.location.reload();
-	};
+	const { t } = useTranslation();
 
 	return (
 		<div className='header-container'>
@@ -23,14 +17,8 @@ export const Header = () => {
 					Movie<span>Quest</span>
 				</span>
 			</Link>
-			<button
-				type='button'
-				className='language-toggle'
-				onClick={toggleLanguage}
-				aria-label={t('language.toggleLabel')}
-			>
-				{t('language.toggleShort')}
-			</button>
+			<p className='app-subtitle'>{t('rules.intro')}</p>
+			<LanguageSelect />
 		</div>
 	);
 };
