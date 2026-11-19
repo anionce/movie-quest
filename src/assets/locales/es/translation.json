@@ -20,7 +20,8 @@
 	"clues": {
 		"tagline": "Eslogan:",
 		"cast": "Reparto:",
-		"still": "Fotograma:"
+		"still": "Fotograma:",
+		"left": "Pistas restantes: {{count}}"
 	},
 	"difficulty": {
 		"label": "Nivel",

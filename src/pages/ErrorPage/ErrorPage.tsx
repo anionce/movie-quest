@@ -4,6 +4,7 @@ import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied
 import { useNavigate } from 'react-router-dom';
 import { FooterButton } from '../../components/FooterButton/FooterButton';
 import { useTranslation } from 'react-i18next';
+import { PATH_OF_ROUTES } from '../../routes/paths';
 
 export const ErrorPage = () => {
 	const { t } = useTranslation();
@@ -19,7 +20,12 @@ export const ErrorPage = () => {
 				<h1 className='error-title'>{t('error.title')}</h1>
 				<span className='error-subtitle'>{t('error.subtitle')}</span>
 			</div>
-			<FooterButton value={<LoopIcon />} type='home' action={() => navigate('/')} label={t('buttons.goBackHome')} />
+			<FooterButton
+				icon={<LoopIcon />}
+				type='home'
+				onClick={() => navigate(PATH_OF_ROUTES.HOME)}
+				label={t('buttons.goBackHome')}
+			/>
 		</div>
 	);
 };

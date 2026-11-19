@@ -1,42 +1,40 @@
-import './GameFooter.scss';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutlineOutlined';
-import LoopIcon from '@mui/icons-material/Loop';
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
-import { FooterButton } from '../FooterButton/FooterButton';
-import { useSelector } from 'react-redux';
-import { selectCluesLeft } from '../../services/slices/scoreboardSlice';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutlineOutlined';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
+import LoopIcon from '@mui/icons-material/Loop';
 import { useTranslation } from 'react-i18next';
+import { FooterButton } from '../FooterButton/FooterButton';
+import './GameFooter.scss';
 
-export type GameFooterProps = {
-	refreshPage: () => void;
+type GameFooterProps = {
+	cluesLeft: number;
 	error: boolean;
-	toggleModal: () => void;
-	toggleLeaderboard: () => void;
+	onRestart: () => void;
+	onShowRules: () => void;
+	onShowLeaderboard: () => void;
 };
 
-export const GameFooter = ({ refreshPage, error, toggleModal, toggleLeaderboard }: GameFooterProps) => {
+export const GameFooter = ({ cluesLeft, error, onRestart, onShowRules, onShowLeaderboard }: GameFooterProps) => {
 	const { t } = useTranslation();
-	const cluesLeft = useSelector(selectCluesLeft);
-
-	const shouldShowGameError = error || cluesLeft === 0;
-
-	const getClass = !shouldShowGameError ? 'game-footer-clues' : 'game-footer-clues game-error';
+	const isWarning = error || cluesLeft === 0;
 
 	return (
 		<div className='game-footer-container'>
-			<FooterButton value={<HelpOutlineIcon />} type='help' action={toggleModal} label={t('buttons.viewRules')} />
+			<FooterButton icon={<HelpOutlineIcon />} type='help' onClick={onShowRules} label={t('buttons.viewRules')} />
 			<FooterButton
-				value={<EmojiEventsOutlinedIcon />}
+				icon={<EmojiEventsOutlinedIcon />}
 				type='leaderboard'
-				action={toggleLeaderboard}
+				onClick={onShowLeaderboard}
 				label={t('buttons.viewLeaderboard')}
 			/>
-			<div className={getClass}>
+			<div
+				className={`game-footer-clues ${isWarning ? 'game-error' : ''}`}
+				aria-label={t('clues.left', { count: cluesLeft })}
+			>
 				{cluesLeft}
 				<LightbulbOutlinedIcon />
 			</div>
-			<FooterButton value={<LoopIcon />} type='reset' action={refreshPage} label={t('buttons.restartGame')} />
+			<FooterButton icon={<LoopIcon />} type='reset' onClick={onRestart} label={t('buttons.restartGame')} />
 		</div>
 	);
 };

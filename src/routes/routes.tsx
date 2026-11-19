@@ -1,31 +1,13 @@
-import { RouteObject } from 'react-router-dom';
-import { Home } from '../pages/Home/Home';
-import { Win } from '../pages/Win/Win';
-import { Lose } from '../pages/Lose/Lose';
+import type { RouteObject } from 'react-router-dom';
 import { ErrorPage } from '../pages/ErrorPage/ErrorPage';
-
-export const PATH_OF_ROUTES = {
-	WIN: '/win',
-	LOSE: '/lose',
-	ERROR: '/error',
-};
+import { Home } from '../pages/Home/Home';
+import { Result } from '../components/Result/Result';
+import { PATH_OF_ROUTES } from './paths';
 
 export const childrenRoutes: RouteObject[] = [
 	{ index: true, element: <Home /> },
-	{
-		path: PATH_OF_ROUTES.WIN,
-		element: <Win />,
-	},
-	{
-		path: PATH_OF_ROUTES.LOSE,
-		element: <Lose />,
-	},
-	{
-		path: PATH_OF_ROUTES.ERROR,
-		element: <ErrorPage />,
-	},
-	{
-		path: '*',
-		element: <ErrorPage />,
-	},
+	{ path: PATH_OF_ROUTES.WIN, element: <Result won /> },
+	{ path: PATH_OF_ROUTES.LOSE, element: <Result won={false} /> },
+	{ path: PATH_OF_ROUTES.ERROR, element: <ErrorPage /> },
+	{ path: '*', element: <ErrorPage /> },
 ];

@@ -29,7 +29,9 @@
 			padding-right: 6px !important;
 			box-shadow: none;
 			background-color: $color-surface;
-			transition: border-color 0.12s ease, box-shadow 0.12s ease;
+			transition:
+				border-color 0.12s ease,
+				box-shadow 0.12s ease;
 
 			&:focus-within {
 				border-color: $color-primary;

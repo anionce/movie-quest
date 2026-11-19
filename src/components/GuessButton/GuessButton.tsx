@@ -1,13 +1,16 @@
-import './GuessButton.scss';
 import { useTranslation } from 'react-i18next';
+import './GuessButton.scss';
 
-export type GuessButtonProps = { guessMovie: (event: React.MouseEvent<HTMLButtonElement>) => void; value: string };
-
-export const GuessButton = ({ guessMovie, value }: GuessButtonProps) => {
+export const GuessButton = ({ disabled, onGuess }: { disabled: boolean; onGuess: () => void }) => {
 	const { t } = useTranslation();
 
 	return (
-		<button onClick={guessMovie} className={value ? 'guess-button' : 'guess-button button-disabled'}>
+		<button
+			type='button'
+			onClick={onGuess}
+			disabled={disabled}
+			className={`guess-button ${disabled ? 'button-disabled' : ''}`}
+		>
 			{t('buttons.guess')}
 		</button>
 	);

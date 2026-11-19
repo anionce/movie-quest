@@ -1,14 +1,20 @@
 .clue-button {
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 32px;
+	padding: 14px 22px;
+	border-radius: $radius-chip;
+	box-shadow: $shadow-sm;
+	font-family: $display-font, $main-font, sans-serif;
+	font-size: $font-size-md;
 	font-weight: 700;
 	color: $color-ink;
-	cursor: default;
-}
 
-.clue-button:hover,
-.clue-button:active {
-	transform: none;
-	filter: none;
-	box-shadow: none;
+	@media only screen and (max-width: $md) {
+		font-size: $font-size-xs;
+	}
 }
 
 .button-year {

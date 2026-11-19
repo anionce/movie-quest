@@ -1,64 +1,50 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DangerousIcon from '@mui/icons-material/Dangerous';
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import LoopIcon from '@mui/icons-material/Loop';
-import './Result.scss';
-import { selectMovie, selectCluesLeft, selectMoviePoster } from '../../services/slices/scoreboardSlice';
-import { useSelector } from 'react-redux';
-import { FooterButton } from '../FooterButton/FooterButton';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
-import { IMAGE_BASE_URL } from '../../services/endpoints';
-import { addLeaderboardEntry } from '../../services/leaderboard';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { useTranslation } from 'react-i18next';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { PATH_OF_ROUTES, type ResultState } from '../../routes/paths';
+import { IMAGE_BASE_URL } from '../../services/tmdb';
+import { FooterButton } from '../FooterButton/FooterButton';
+import './Result.scss';
 
-export type ResultProps = {
-	result: string;
-};
-
-export const Result = ({ result }: ResultProps) => {
+export const Result = ({ won }: { won: boolean }) => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
-	const hasSavedScore = useRef(false);
+	const result = useLocation().state as ResultState | null;
 
-	const movieResult = useSelector(selectMovie);
-	const finalScore = useSelector(selectCluesLeft);
-	const moviePoster = useSelector(selectMoviePoster);
-	const isWin = result === 'win';
-
-	const goHome = () => navigate('/');
-
-	useEffect(() => {
-		if (isWin && movieResult && !hasSavedScore.current) {
-			hasSavedScore.current = true;
-			addLeaderboardEntry({ movie: movieResult, score: finalScore, date: new Date().toLocaleDateString() });
-		}
-	}, [isWin, movieResult, finalScore]);
+	if (!result) return <Navigate to={PATH_OF_ROUTES.HOME} replace />;
 
 	return (
 		<div className='result-container'>
-			<div className={isWin ? 'result-card result-card-win' : 'result-card result-card-lose'}>
-				{moviePoster ? (
-					<img src={`${IMAGE_BASE_URL}${moviePoster}`} alt={movieResult} className='result-poster' />
+			<div className={`result-card ${won ? 'result-card-win' : 'result-card-lose'}`}>
+				{result.poster ? (
+					<img src={`${IMAGE_BASE_URL}${result.poster}`} alt={result.movie} className='result-poster' />
 				) : (
 					<div className='result-icon-badge'>
-						{isWin ? <CheckCircleIcon className='correct' /> : <DangerousIcon className='incorrect' />}
+						{won ? <CheckCircleIcon className='correct' /> : <DangerousIcon className='incorrect' />}
 					</div>
 				)}
-				<span className='result-label'>{isWin ? t('result.youGotIt') : t('result.movieWas')}</span>
-				<h1 className='result-title'>{movieResult}</h1>
-				{isWin ? (
+				<span className='result-label'>{won ? t('result.youGotIt') : t('result.movieWas')}</span>
+				<h1 className='result-title'>{result.movie}</h1>
+				{won ? (
 					<div className='result-score-row'>
 						<span className='result-score'>
-							{finalScore} {finalScore === 1 ? t('result.point') : t('result.points')}
+							{result.score} {result.score === 1 ? t('result.point') : t('result.points')}
 						</span>
-						{finalScore === 0 && <SentimentDissatisfiedIcon className='result-score-icon' />}
+						{result.score === 0 && <SentimentDissatisfiedIcon className='result-score-icon' />}
 					</div>
 				) : (
 					<span className='result-score'>{t('result.youLost')}</span>
 				)}
 			</div>
-			<FooterButton value={<LoopIcon />} type='home' action={goHome} label={t('buttons.playAgain')} />
+			<FooterButton
+				icon={<LoopIcon />}
+				type='home'
+				onClick={() => navigate(PATH_OF_ROUTES.HOME)}
+				label={t('buttons.playAgain')}
+			/>
 		</div>
 	);
 };

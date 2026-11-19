@@ -1,18 +1,15 @@
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import './FooterButton.scss';
 
-export type FooterButtonProps = {
-	value: ReactElement;
+type FooterButtonProps = {
+	icon: ReactElement;
 	type: string;
-	action: () => void;
-	label?: string;
+	label: string;
+	onClick: () => void;
 };
 
-export const FooterButton = ({ value, type, action, label }: FooterButtonProps) => {
-	const getClassName = () => `button-${type}`;
-	return (
-		<button onClick={action} className={getClassName()} aria-label={label ?? type}>
-			{value}
-		</button>
-	);
-};
+export const FooterButton = ({ icon, type, label, onClick }: FooterButtonProps) => (
+	<button type='button' onClick={onClick} className={`button-${type}`} aria-label={label}>
+		{icon}
+	</button>
+);

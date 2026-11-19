@@ -33,5 +33,3 @@ export const setAppLanguage = (lang: 'es' | 'en') => {
 	localStorage.setItem(STORAGE_KEY, lang);
 	i18n.changeLanguage(lang);
 };
-
-export default i18n;

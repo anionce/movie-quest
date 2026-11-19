@@ -1,6 +1,6 @@
 import './Leaderboard.scss';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import { getLeaderboard } from '../../services/leaderboard';
+import { getLeaderboard } from '../../lib/storage';
 import { useTranslation } from 'react-i18next';
 
 export const Leaderboard = () => {

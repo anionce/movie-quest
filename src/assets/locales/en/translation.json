@@ -20,7 +20,8 @@
 	"clues": {
 		"tagline": "Tagline:",
 		"cast": "Cast:",
-		"still": "Movie still:"
+		"still": "Movie still:",
+		"left": "Clues left: {{count}}"
 	},
 	"difficulty": {
 		"label": "Level",

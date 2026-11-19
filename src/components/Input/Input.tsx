@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next';
 
 type InputProps = {
 	searchableResults: string[];
-	guessMovie: (movie: string) => void;
-	setGameError: (error: boolean) => void;
+	onGuess: (movie: string) => void;
+	onClearError: () => void;
 	gameError: boolean;
 };
 
@@ -16,7 +16,7 @@ const MIN_CHARS_TO_SEARCH = 3;
 
 const defaultFilter = createFilterOptions<string>();
 
-export const Input = ({ searchableResults, guessMovie, setGameError, gameError }: InputProps) => {
+export const Input = ({ searchableResults, onGuess, onClearError, gameError }: InputProps) => {
 	const { t } = useTranslation();
 	const [inputValue, setInputValue] = useState('');
 	const [inputText, setInputText] = useState('');
@@ -30,10 +30,8 @@ export const Input = ({ searchableResults, guessMovie, setGameError, gameError }
 					id='input-autocomplete'
 					options={searchableResults}
 					size='small'
-					sx={{
-						width: 300,
-					}}
-					disableClearable={true}
+					sx={{ width: 300 }}
+					disableClearable
 					className={gameError ? 'input-button input-error' : 'input-button'}
 					open={isOpen && inputText.trim().length >= MIN_CHARS_TO_SEARCH}
 					onOpen={() => setIsOpen(true)}
@@ -48,7 +46,7 @@ export const Input = ({ searchableResults, guessMovie, setGameError, gameError }
 					onInputChange={(_, newInputValue) => {
 						setInputText(newInputValue);
 						if (newInputValue === '') {
-							setGameError(false);
+							onClearError();
 							setInputValue(newInputValue);
 						}
 					}}
@@ -67,13 +65,7 @@ export const Input = ({ searchableResults, guessMovie, setGameError, gameError }
 						/>
 					)}
 				/>
-				<GuessButton
-					guessMovie={() => {
-						setGameError(false);
-						guessMovie(inputValue);
-					}}
-					value={inputValue}
-				/>
+				<GuessButton disabled={!inputValue} onGuess={() => onGuess(inputValue)} />
 			</div>
 			{gameError && <span className='guess-error-message'>{t('input.error')}</span>}
 		</div>

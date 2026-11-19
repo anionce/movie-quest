@@ -1,20 +1,16 @@
-// FONTS
 $main-font: 'Inter';
 $display-font: 'Poppins';
 
-// SCREEN SIZES
 $sm: 400px;
 $md: 750px;
 $lg: 1000px;
 
-// BASE (pastel lavender theme)
 $color-bg: #efe9fb;
 $color-surface: #ffffff;
 $color-ink: #241f3d;
 $color-muted: rgba(36, 31, 61, 0.55);
 $color-border: rgba(36, 31, 61, 0.08);
 
-// ACCENTS (curated pastel palette)
 $color-primary: #8c7ae6;
 $color-primary-dark: #7566d6;
 $color-pink: #f6a8c9;
@@ -23,14 +19,12 @@ $color-yellow: #f7d978;
 $color-green: #4fb783;
 $color-red: #ec6f68;
 
-// FONT SIZES
 $font-size-xs: 13px;
 $font-size-s: 15px;
 $font-size-md: 18px;
 $font-size-lg: 24px;
 $font-size-xl: 30px;
 
-// SHAPE
 $radius-chip: 999px;
 $radius-card: 22px;
 $shadow-sm: 0 4px 14px rgba(140, 122, 230, 0.18);
